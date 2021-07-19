@@ -38,11 +38,19 @@ list.oidexit <- getData(
     input.file = file.path(data.directory,data.snapshot,"OIDEXIT_OID_Exit-Prod-V4-0-0_1-0-0_spec.json")
     );
 
-examineData(list.input = list.oidexit);
+# examineData(list.input = list.oidexit);
 
 list.nodes <- getListOfNodes(list.input = list.oidexit);
-cat("\nlist.nodes\n");
-print( list.nodes   );
+
+print( list.nodes[['Root']] );
+
+print( list.nodes[['Root']]$type );
+
+print( list.nodes[['Root']]$properties );
+
+print( list.nodes[['Root']]$parent );
+
+print( list.nodes[['Root']]$children );
 
 ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
 

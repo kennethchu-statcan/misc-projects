@@ -7,7 +7,23 @@ node <- R6::R6Class(
 
     public = list(
 
+        # instantiation attributes
+        type           = NULL,
+        parent         = NULL,
+        children       = NULL,
+        columns        = NULL,
+        displayLogic   = NULL,
+        enterLogic     = NULL,
+        properties     = NULL,
+        rows           = NULL,
+        condition.if   = NULL,
+        condition.then = NULL,
+
+        # derived attributes
+
+        # methods
         initialize = function(
+            type           = NULL,
             parent         = NULL,
             children       = NULL,
             columns        = NULL,
@@ -18,15 +34,16 @@ node <- R6::R6Class(
             condition.if   = NULL,
             condition.then = NULL
             ) {
-                private$parent         <- parent;
-                private$children       <- children;
-                private$columns        <- columns;
-                private$displayLogic   <- displayLogic;
-                private$enterLogic     <- enterLogic;
-                private$properties     <- properties;
-                private$rows           <- rows;
-                private$condition.if   <- condition.if;
-                private$condition.then <- condition.then;
+                self$type           <- type;
+                self$parent         <- parent;
+                self$children       <- children;
+                self$columns        <- columns;
+                self$displayLogic   <- displayLogic;
+                self$enterLogic     <- enterLogic;
+                self$properties     <- properties;
+                self$rows           <- rows;
+                self$condition.if   <- condition.if;
+                self$condition.then <- condition.then;
             },
 
         print_node = function(
@@ -54,18 +71,6 @@ node <- R6::R6Class(
 
         ), # public = list()
 
-    private = list(
-
-        parent         = NULL,
-        children       = NULL,
-        columns        = NULL,
-        displayLogic   = NULL,
-        enterLogic     = NULL,
-        properties     = NULL,
-        rows           = NULL,
-        condition.if   = NULL,
-        condition.then = NULL
-
-        ) # private = list()
+    private = list() # private = list()
 
     );

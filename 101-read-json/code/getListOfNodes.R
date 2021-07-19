@@ -41,6 +41,7 @@ getListOfNodes <- function(
             );
 
         list.nodes[[ nodeID ]] <- node$new(
+            type           = list.attributes[['type'          ]],
             parent         = list.attributes[['parent'        ]],
             children       = list.attributes[['children'      ]],
             columns        = list.attributes[['columns'       ]],
@@ -67,6 +68,9 @@ getListOfNodes_get.attributes <- function(
     DF.input = NULL
     ) {
 
+    list.attributes <- list();
+    list.attributes[[ 'type' ]] <- DF.input[1,'key1'];
+
     attribute.types <- c(
         'parent',
         'children',
@@ -79,7 +83,6 @@ getListOfNodes_get.attributes <- function(
         'condition.then'
         )
 
-    list.attributes <- list();
     for ( attribute.type in attribute.types ) {
 
         list.attributes[[ attribute.type ]] <- NULL;
