@@ -29,37 +29,95 @@ getListOfNodes <- function(
     print( table(DF.nested[,c('key1','key3')])   );
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
-    nodeIDs <- unique(DF.nested[,'key2']);
+    current.depth  <- 0;
+    current.nodeID <- 'Root';
+
+    DF.nested[,'depth'] <- NA;
+    DF.nested[DF.nested[,'key2'] == current.nodeID,'depth'] <- current.depth;
 
     list.nodes <- list();
-    for ( nodeID in nodeIDs ) {
+    list.attributes <- getListOfNodes_get.attributes(
+        DF.input = DF.nested[DF.nested[,'key2'] == current.nodeID,]
+        );
+    list.nodes[[ current.nodeID ]] <- node$new(
+        nodeID         = current.nodeID,
+        depth          = current.depth,
+        type           = list.attributes[['type'          ]],
+        parent         = list.attributes[['parent'        ]],
+        children       = list.attributes[['children'      ]],
+        columns        = list.attributes[['columns'       ]],
+        displayLogic   = list.attributes[['displayLogic'  ]],
+        enterLogic     = list.attributes[['enterLogic'    ]],
+        properties     = list.attributes[['properties'    ]],
+        rows           = list.attributes[['rows'          ]],
+        condition.if   = list.attributes[['condition.if'  ]],
+        condition.then = list.attributes[['condition.then']]
+        );
 
-        DF.temp <- DF.nested[DF.nested[,'key2'] == nodeID,];
+    ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
+    current.nodeIDs <- setdiff(unique(DF.nested[,'key2']),current.nodeID);
+    while ( length(current.nodeIDs) > 0 & sum(DF.nested[!is.na(DF.nested[,'depth']) & DF.nested[,'depth'] == current.depth,'key3'] == 'children') > 0 ) {
 
-        list.attributes <- getListOfNodes_get.attributes(
-            DF.input = DF.temp
-            );
+        DF.temp         <- DF.nested[!is.na(DF.nested[,'depth']) & DF.nested[,'depth'] == current.depth,];
+        children.IDs    <- unique(DF.temp[DF.temp[,'key3'] == 'children','value']);
+        current.nodeIDs <- setdiff(current.nodeIDs,children.IDs);
 
-        list.nodes[[ nodeID ]] <- node$new(
-            type           = list.attributes[['type'          ]],
-            parent         = list.attributes[['parent'        ]],
-            children       = list.attributes[['children'      ]],
-            columns        = list.attributes[['columns'       ]],
-            displayLogic   = list.attributes[['displayLogic'  ]],
-            enterLogic     = list.attributes[['enterLogic'    ]],
-            properties     = list.attributes[['properties'    ]],
-            rows           = list.attributes[['rows'          ]],
-            condition.if   = list.attributes[['condition.if'  ]],
-            condition.then = list.attributes[['condition.then']]
-            );
+        current.depth <- current.depth + 1;
+        DF.nested[DF.nested[,'key2'] %in% children.IDs,'depth'] <- current.depth;
+
+        for ( nodeID in children.IDs ) {
+            list.attributes <- getListOfNodes_get.attributes(
+                DF.input = DF.nested[DF.nested[,'key2'] == nodeID,]
+                );
+            list.nodes[[ nodeID ]] <- node$new(
+                nodeID         = nodeID,
+                depth          = current.depth,
+                type           = list.attributes[['type'          ]],
+                parent         = list.attributes[['parent'        ]],
+                children       = list.attributes[['children'      ]],
+                columns        = list.attributes[['columns'       ]],
+                displayLogic   = list.attributes[['displayLogic'  ]],
+                enterLogic     = list.attributes[['enterLogic'    ]],
+                properties     = list.attributes[['properties'    ]],
+                rows           = list.attributes[['rows'          ]],
+                condition.if   = list.attributes[['condition.if'  ]],
+                condition.then = list.attributes[['condition.then']]
+                );
+            }
 
         }
 
+    ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
+    # nodeIDs <- unique(DF.nested[,'key2']);
+    #
+    # list.nodes <- list();
+    # for ( nodeID in nodeIDs ) {
+    #
+    #     DF.temp <- DF.nested[DF.nested[,'key2'] == nodeID,];
+    #
+    #     list.attributes <- getListOfNodes_get.attributes(
+    #         DF.input = DF.temp
+    #         );
+    #
+    #     list.nodes[[ nodeID ]] <- node$new(
+    #         type           = list.attributes[['type'          ]],
+    #         parent         = list.attributes[['parent'        ]],
+    #         children       = list.attributes[['children'      ]],
+    #         columns        = list.attributes[['columns'       ]],
+    #         displayLogic   = list.attributes[['displayLogic'  ]],
+    #         enterLogic     = list.attributes[['enterLogic'    ]],
+    #         properties     = list.attributes[['properties'    ]],
+    #         rows           = list.attributes[['rows'          ]],
+    #         condition.if   = list.attributes[['condition.if'  ]],
+    #         condition.then = list.attributes[['condition.then']]
+    #         );
+    #
+    #     }
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
     cat(paste0("\n",thisFunctionName,"() quits."));
     cat("\n### ~~~~~~~~~~~~~~~~~~~~ ###\n");
-    return( list.nodes );
+    return( list(DF.nodes = DF.nested , list.nodes = list.nodes) );
 
     }
 

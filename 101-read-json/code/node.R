@@ -8,6 +8,8 @@ node <- R6::R6Class(
     public = list(
 
         # instantiation attributes
+        nodeID         = NULL,
+        depth          = NULL,
         type           = NULL,
         parent         = NULL,
         children       = NULL,
@@ -23,6 +25,8 @@ node <- R6::R6Class(
 
         # methods
         initialize = function(
+            nodeID         = NULL,
+            depth          = NULL,
             type           = NULL,
             parent         = NULL,
             children       = NULL,
@@ -34,6 +38,8 @@ node <- R6::R6Class(
             condition.if   = NULL,
             condition.then = NULL
             ) {
+                self$nodeID         <- nodeID;
+                self$depth          <- depth;
                 self$type           <- type;
                 self$parent         <- parent;
                 self$children       <- children;
@@ -53,22 +59,45 @@ node <- R6::R6Class(
             base::cat("\n");
             base::cat(base::paste0(base::rep(indent,self$depth),collapse="") );
             base::cat(base::paste0("(",self$nodeID,") "));
-            if (0 == self$nodeID) {
-                base::cat("[root]");
-                }
-            else {
-                base::cat(base::paste0("[",
-                    self$birthCriterion$varname,   " ",
-                    self$birthCriterion$comparison," ",
-                    #FUN.format(self$birthCriterion$threshold),
-                    self$birthCriterion$threshold,
-                    "]"));
-                }
-            base::cat(base::paste0(", impurity = ",FUN.format(self$impurity)));
-            base::cat(base::paste0(", np.count = ",FUN.format(base::length(self$np.rowIDs))));
-            base::cat(base::paste0(", p.count = ", FUN.format(base::length(self$p.rowIDs))));
+            # if (0 == self$nodeID) {
+            #     base::cat("[root]");
+            #     }
+            # else {
+            #     base::cat(base::paste0("[",
+            #         self$birthCriterion$varname,   " ",
+            #         self$birthCriterion$comparison," ",
+            #         #FUN.format(self$birthCriterion$threshold),
+            #         self$birthCriterion$threshold,
+            #         "]"));
+            #     }
+            # base::cat(base::paste0(", impurity = ",FUN.format(self$impurity)));
+            # base::cat(base::paste0(", np.count = ",FUN.format(base::length(self$np.rowIDs))));
+            # base::cat(base::paste0(", p.count = ", FUN.format(base::length(self$p.rowIDs))));
             }
 
+        # print_node = function(
+        #     indent     = '  ',
+        #     FUN.format = function(x) { return(x) }
+        #     ) {
+        #     base::cat("\n");
+        #     base::cat(base::paste0(base::rep(indent,self$depth),collapse="") );
+        #     base::cat(base::paste0("(",self$nodeID,") "));
+        #     if (0 == self$nodeID) {
+        #         base::cat("[root]");
+        #         }
+        #     else {
+        #         base::cat(base::paste0("[",
+        #             self$birthCriterion$varname,   " ",
+        #             self$birthCriterion$comparison," ",
+        #             #FUN.format(self$birthCriterion$threshold),
+        #             self$birthCriterion$threshold,
+        #             "]"));
+        #         }
+        #     base::cat(base::paste0(", impurity = ",FUN.format(self$impurity)));
+        #     base::cat(base::paste0(", np.count = ",FUN.format(base::length(self$np.rowIDs))));
+        #     base::cat(base::paste0(", p.count = ", FUN.format(base::length(self$p.rowIDs))));
+        #     }
+        #
         ), # public = list()
 
     private = list() # private = list()

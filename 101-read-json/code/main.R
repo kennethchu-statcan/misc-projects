@@ -21,7 +21,8 @@ code.files <- c(
     "getData.R",
     "getListOfNodes.R",
     "examineData.R",
-    "node.R"
+    "node.R",
+    "printListOfNodes.R"
     );
 
 for ( code.file in code.files ) {
@@ -40,7 +41,14 @@ list.oidexit <- getData(
 
 # examineData(list.input = list.oidexit);
 
-list.nodes <- getListOfNodes(list.input = list.oidexit);
+results.getListOfNodes <- getListOfNodes(list.input = list.oidexit);
+
+DF.nodes   <- results.getListOfNodes[[  'DF.nodes']];
+list.nodes <- results.getListOfNodes[['list.nodes']];
+
+write.csv(file = "nodes-DF.csv",     x      =   DF.nodes);
+saveRDS(  file = "nodes-DF.RData",   object =   DF.nodes);
+saveRDS(  file = "nodes-list.RData", object = list.nodes);
 
 print( list.nodes[['Root']] );
 
@@ -51,6 +59,9 @@ print( list.nodes[['Root']]$properties );
 print( list.nodes[['Root']]$parent );
 
 print( list.nodes[['Root']]$children );
+
+### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
+printListOfNodes(list.nodes = list.nodes);
 
 ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
 
