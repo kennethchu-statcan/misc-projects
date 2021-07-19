@@ -41,6 +41,9 @@ examineData <- function(
     cat("\nunique(DF.nested[,'key1'])\n");
     print( unique(DF.nested[,'key1'])   );
 
+    cat("\ntable(DF.nested[DF.nested[,'key1'] != 'Reference',c('key1','key3')])\n");
+    print( table(DF.nested[DF.nested[,'key1'] != 'Reference',c('key1','key3')])   );
+
     write.csv(
         x         = DF.nested,
         file      = csv.nested,

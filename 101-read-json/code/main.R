@@ -19,7 +19,9 @@ setwd( output.directory );
 # source supporting R code
 code.files <- c(
     "getData.R",
-    "examineData.R"
+    "getListOfNodes.R",
+    "examineData.R",
+    "node.R"
     );
 
 for ( code.file in code.files ) {
@@ -37,6 +39,12 @@ list.oidexit <- getData(
     );
 
 examineData(list.input = list.oidexit);
+
+list.nodes <- getListOfNodes(list.input = list.oidexit);
+cat("\nlist.nodes\n");
+print( list.nodes   );
+
+### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
 
 ##################################################
 print( warnings() );
