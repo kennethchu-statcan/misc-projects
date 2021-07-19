@@ -39,8 +39,9 @@ list.oidexit <- getData(
     input.file = file.path(data.directory,data.snapshot,"OIDEXIT_OID_Exit-Prod-V4-0-0_1-0-0_spec.json")
     );
 
-# examineData(list.input = list.oidexit);
+examineData(list.input = list.oidexit);
 
+### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
 results.getListOfNodes <- getListOfNodes(list.input = list.oidexit);
 
 DF.nodes   <- results.getListOfNodes[[  'DF.nodes']];
@@ -50,18 +51,11 @@ write.csv(file = "nodes-DF.csv",     x      =   DF.nodes);
 saveRDS(  file = "nodes-DF.RData",   object =   DF.nodes);
 saveRDS(  file = "nodes-list.RData", object = list.nodes);
 
-print( list.nodes[['Root']] );
-
-print( list.nodes[['Root']]$type );
-
-print( list.nodes[['Root']]$properties );
-
-print( list.nodes[['Root']]$parent );
-
-print( list.nodes[['Root']]$children );
-
 ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
-printListOfNodes(list.nodes = list.nodes);
+printListOfNodes(
+    list.nodes = list.nodes,
+    txt.output = 'nodes.txt'
+    );
 
 ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
 

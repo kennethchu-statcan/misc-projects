@@ -1,11 +1,18 @@
 
 printListOfNodes <- function(
-    list.nodes = NULL
+    list.nodes = NULL,
+    txt.output = NULL
     ) {
 
     thisFunctionName <- "printListOfNodes";
     cat("\n### ~~~~~~~~~~~~~~~~~~~~ ###");
     cat(paste0("\n",thisFunctionName,"() starts.\n\n"));
+
+    ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
+    if ( !is.null(txt.output) ) {
+        file.output <- file(description = txt.output,  open = "wt");
+        sink(file = file.output,  type = "output" );
+        }
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
     list.nodes[['Root']]$print_node();
@@ -16,7 +23,12 @@ printListOfNodes <- function(
             indent     = '    '
             );
         }
-    base::cat("\n");
+    base::cat("\n\n");
+
+    ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
+    if ( !is.null(txt.output) ) {
+        sink(file = NULL, type = "output" );
+        }
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
     cat(paste0("\n",thisFunctionName,"() quits."));
