@@ -59,6 +59,18 @@ node <- R6::R6Class(
             base::cat("\n");
             base::cat(base::paste0(base::rep(indent,self$depth),collapse="") );
             base::cat(base::paste0("(",self$nodeID,") "));
+            if ( length(self$properties) > 0 ) {
+                properties.vector <- c();
+                for ( i in seq(1,length(self$properties)) ) {
+                    for ( temp.key in names(self$properties[[i]]) ) {
+                        temp.value        <- self$properties[[i]][[temp.key]]
+                        temp.string       <- paste0(temp.key," = ",paste0(temp.value,collapse=", "));
+                        properties.vector <- c(properties.vector,temp.string);
+                        }
+                    }
+                base::cat(": ");
+                base::cat(paste0(properties.vector, collapse = "; "));
+                }
             },
 
         get_offspring_IDs = function() {
