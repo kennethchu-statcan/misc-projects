@@ -11,13 +11,13 @@ node <- R6::R6Class(
         nodeID         = NULL,
         depth          = NULL,
         type           = NULL,
+        properties     = NULL,
         parent         = NULL,
         children       = NULL,
+        rows           = NULL,
         columns        = NULL,
         displayLogic   = NULL,
         enterLogic     = NULL,
-        properties     = NULL,
-        rows           = NULL,
         condition.if   = NULL,
         condition.then = NULL,
 
@@ -28,26 +28,26 @@ node <- R6::R6Class(
             nodeID         = NULL,
             depth          = NULL,
             type           = NULL,
+            properties     = NULL,
             parent         = NULL,
             children       = NULL,
+            rows           = NULL,
             columns        = NULL,
             displayLogic   = NULL,
             enterLogic     = NULL,
-            properties     = NULL,
-            rows           = NULL,
             condition.if   = NULL,
             condition.then = NULL
             ) {
                 self$nodeID         <- nodeID;
                 self$depth          <- depth;
                 self$type           <- type;
+                self$properties     <- properties;
                 self$parent         <- parent;
                 self$children       <- children;
+                self$rows           <- rows;
                 self$columns        <- columns;
                 self$displayLogic   <- displayLogic;
                 self$enterLogic     <- enterLogic;
-                self$properties     <- properties;
-                self$rows           <- rows;
                 self$condition.if   <- condition.if;
                 self$condition.then <- condition.then;
             },
@@ -59,45 +59,21 @@ node <- R6::R6Class(
             base::cat("\n");
             base::cat(base::paste0(base::rep(indent,self$depth),collapse="") );
             base::cat(base::paste0("(",self$nodeID,") "));
-            # if (0 == self$nodeID) {
-            #     base::cat("[root]");
-            #     }
-            # else {
-            #     base::cat(base::paste0("[",
-            #         self$birthCriterion$varname,   " ",
-            #         self$birthCriterion$comparison," ",
-            #         #FUN.format(self$birthCriterion$threshold),
-            #         self$birthCriterion$threshold,
-            #         "]"));
-            #     }
-            # base::cat(base::paste0(", impurity = ",FUN.format(self$impurity)));
-            # base::cat(base::paste0(", np.count = ",FUN.format(base::length(self$np.rowIDs))));
-            # base::cat(base::paste0(", p.count = ", FUN.format(base::length(self$p.rowIDs))));
+            },
+
+        get_offspring_IDs = function() {
+            vector.output <- unique(c(
+                as.vector(unlist(self$children      )),
+                as.vector(unlist(self$rows          )),
+                as.vector(unlist(self$columns       )),
+                as.vector(unlist(self$displayLogic  )),
+                as.vector(unlist(self$enterLogic    )),
+                as.vector(unlist(self$condition.if  )),
+                as.vector(unlist(self$condition.then))
+                ));
+            return(vector.output);
             }
 
-        # print_node = function(
-        #     indent     = '  ',
-        #     FUN.format = function(x) { return(x) }
-        #     ) {
-        #     base::cat("\n");
-        #     base::cat(base::paste0(base::rep(indent,self$depth),collapse="") );
-        #     base::cat(base::paste0("(",self$nodeID,") "));
-        #     if (0 == self$nodeID) {
-        #         base::cat("[root]");
-        #         }
-        #     else {
-        #         base::cat(base::paste0("[",
-        #             self$birthCriterion$varname,   " ",
-        #             self$birthCriterion$comparison," ",
-        #             #FUN.format(self$birthCriterion$threshold),
-        #             self$birthCriterion$threshold,
-        #             "]"));
-        #         }
-        #     base::cat(base::paste0(", impurity = ",FUN.format(self$impurity)));
-        #     base::cat(base::paste0(", np.count = ",FUN.format(base::length(self$np.rowIDs))));
-        #     base::cat(base::paste0(", p.count = ", FUN.format(base::length(self$p.rowIDs))));
-        #     }
-        #
         ), # public = list()
 
     private = list() # private = list()

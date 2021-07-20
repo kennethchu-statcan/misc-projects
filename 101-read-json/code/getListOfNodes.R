@@ -43,13 +43,13 @@ getListOfNodes <- function(
         nodeID         = current.nodeID,
         depth          = current.depth,
         type           = list.attributes[['type'          ]],
+        properties     = list.attributes[['properties'    ]],
         parent         = list.attributes[['parent'        ]],
         children       = list.attributes[['children'      ]],
+        rows           = list.attributes[['rows'          ]],
         columns        = list.attributes[['columns'       ]],
         displayLogic   = list.attributes[['displayLogic'  ]],
         enterLogic     = list.attributes[['enterLogic'    ]],
-        properties     = list.attributes[['properties'    ]],
-        rows           = list.attributes[['rows'          ]],
         condition.if   = list.attributes[['condition.if'  ]],
         condition.then = list.attributes[['condition.then']]
         );
@@ -59,7 +59,8 @@ getListOfNodes <- function(
     while ( length(current.nodeIDs) > 0 & sum(DF.nested[!is.na(DF.nested[,'depth']) & DF.nested[,'depth'] == current.depth,'key3'] == 'children') > 0 ) {
 
         DF.temp         <- DF.nested[!is.na(DF.nested[,'depth']) & DF.nested[,'depth'] == current.depth,];
-        children.IDs    <- unique(DF.temp[DF.temp[,'key3'] == 'children','value']);
+        # children.IDs  <- unique(DF.temp[DF.temp[,'key3'] == 'children','value']);
+        children.IDs    <- unique(DF.temp[DF.temp[,'key3'] %in% c('children','rows','columns','displayLogic','enterLogic','condition.if','condition.then'),'value']);
         current.nodeIDs <- setdiff(current.nodeIDs,children.IDs);
 
         current.depth <- current.depth + 1;
@@ -73,46 +74,19 @@ getListOfNodes <- function(
                 nodeID         = nodeID,
                 depth          = current.depth,
                 type           = list.attributes[['type'          ]],
+                properties     = list.attributes[['properties'    ]],
                 parent         = list.attributes[['parent'        ]],
                 children       = list.attributes[['children'      ]],
+                rows           = list.attributes[['rows'          ]],
                 columns        = list.attributes[['columns'       ]],
                 displayLogic   = list.attributes[['displayLogic'  ]],
                 enterLogic     = list.attributes[['enterLogic'    ]],
-                properties     = list.attributes[['properties'    ]],
-                rows           = list.attributes[['rows'          ]],
                 condition.if   = list.attributes[['condition.if'  ]],
                 condition.then = list.attributes[['condition.then']]
                 );
             }
 
         }
-
-    ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
-    # nodeIDs <- unique(DF.nested[,'key2']);
-    #
-    # list.nodes <- list();
-    # for ( nodeID in nodeIDs ) {
-    #
-    #     DF.temp <- DF.nested[DF.nested[,'key2'] == nodeID,];
-    #
-    #     list.attributes <- getListOfNodes_get.attributes(
-    #         DF.input = DF.temp
-    #         );
-    #
-    #     list.nodes[[ nodeID ]] <- node$new(
-    #         type           = list.attributes[['type'          ]],
-    #         parent         = list.attributes[['parent'        ]],
-    #         children       = list.attributes[['children'      ]],
-    #         columns        = list.attributes[['columns'       ]],
-    #         displayLogic   = list.attributes[['displayLogic'  ]],
-    #         enterLogic     = list.attributes[['enterLogic'    ]],
-    #         properties     = list.attributes[['properties'    ]],
-    #         rows           = list.attributes[['rows'          ]],
-    #         condition.if   = list.attributes[['condition.if'  ]],
-    #         condition.then = list.attributes[['condition.then']]
-    #         );
-    #
-    #     }
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
     cat(paste0("\n",thisFunctionName,"() quits."));
@@ -131,12 +105,12 @@ getListOfNodes_get.attributes <- function(
 
     attribute.types <- c(
         'parent',
+        'properties',
         'children',
+        'rows',
         'columns',
         'displayLogic',
         'enterLogic',
-        'properties',
-        'rows',
         'condition.if',
         'condition.then'
         )

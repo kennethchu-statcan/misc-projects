@@ -16,7 +16,7 @@ printListOfNodes <- function(
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
     list.nodes[['Root']]$print_node();
-    for ( child.ID in as.vector(unlist(list.nodes[['Root']]$children)) ) {
+    for ( child.ID in list.nodes[['Root']]$get_offspring_IDs() ) {
         printListOfNodes_print.children.nodes(
             nodeID     = child.ID,
             list.nodes = list.nodes,
@@ -44,8 +44,8 @@ printListOfNodes_print.children.nodes <- function(
     indent     = '  '
     ) {
     list.nodes[[nodeID]]$print_node(indent = indent);
-    if ( length(list.nodes[[nodeID]]$children) > 0 ) {
-        for ( child.ID in as.vector(unlist(list.nodes[[nodeID]]$children)) ) {
+    if ( length(list.nodes[[nodeID]]$get_offspring_IDs()) > 0 ) {
+        for ( child.ID in list.nodes[[nodeID]]$get_offspring_IDs() ) {
             printListOfNodes_print.children.nodes(
                 nodeID     = child.ID,
                 list.nodes = list.nodes,
