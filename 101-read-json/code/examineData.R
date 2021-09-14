@@ -79,9 +79,17 @@ examineData <- function(
         );
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
+    list.output <- list(
+        DF.diagnostics  = DF.diagnostics,
+        DF.nested       = DF.nested,
+        DF.non.nested   = DF.non.nested,
+        DF.localization = DF.localization
+        );
+
+    ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
     cat(paste0("\n",thisFunctionName,"() quits."));
     cat("\n### ~~~~~~~~~~~~~~~~~~~~ ###\n");
-    return( NULL );
+    return( list.output );
 
     }
 
