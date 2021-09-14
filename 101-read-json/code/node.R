@@ -56,9 +56,9 @@ node <- R6::R6Class(
             indent     = '  ',
             FUN.format = function(x) { return(x) }
             ) {
-            base::cat("\n");
-            base::cat(base::paste0(base::rep(indent,self$depth),collapse="") );
-            base::cat(base::paste0("(",self$nodeID,") "));
+            cat("\n");
+            cat(paste0(rep(indent,self$depth),collapse="") );
+            cat(paste0("(",self$nodeID,") "));
             if ( length(self$properties) > 0 ) {
                 properties.vector <- c();
                 for ( i in seq(1,length(self$properties)) ) {
@@ -68,8 +68,8 @@ node <- R6::R6Class(
                         properties.vector <- c(properties.vector,temp.string);
                         }
                     }
-                base::cat(": ");
-                base::cat(paste0(properties.vector, collapse = "; "));
+                cat(": ");
+                cat(paste0(properties.vector, collapse = "; "));
                 }
             },
 
