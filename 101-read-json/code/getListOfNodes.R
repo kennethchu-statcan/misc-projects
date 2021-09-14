@@ -1,11 +1,16 @@
 
 getListOfNodes <- function(
-    list.input = NULL
+    list.input      = NULL,
+    DF.localization = NULL
     ) {
 
     thisFunctionName <- "getListOfNodes";
     cat("\n### ~~~~~~~~~~~~~~~~~~~~ ###");
     cat(paste0("\n",thisFunctionName,"() starts.\n\n"));
+
+    ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
+    cat("\nstr(DF.localization)\n");
+    print( str(DF.localization)   );
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
     DF.nested <- examineData_nested(
@@ -37,7 +42,8 @@ getListOfNodes <- function(
 
     list.nodes <- list();
     list.attributes <- getListOfNodes_get.attributes(
-        DF.input = DF.nested[DF.nested[,'key2'] == current.nodeID,]
+        DF.input        = DF.nested[DF.nested[,'key2'] == current.nodeID,],
+        DF.localization = DF.localization
         );
     list.nodes[[ current.nodeID ]] <- node$new(
         nodeID         = current.nodeID,
@@ -68,7 +74,8 @@ getListOfNodes <- function(
 
         for ( nodeID in children.IDs ) {
             list.attributes <- getListOfNodes_get.attributes(
-                DF.input = DF.nested[DF.nested[,'key2'] == nodeID,]
+                DF.input        = DF.nested[DF.nested[,'key2'] == nodeID,],
+                DF.localization = DF.localization
                 );
             list.nodes[[ nodeID ]] <- node$new(
                 nodeID         = nodeID,
@@ -97,7 +104,8 @@ getListOfNodes <- function(
 
 ##################################################
 getListOfNodes_get.attributes <- function(
-    DF.input = NULL
+    DF.input        = NULL,
+    DF.localization = NULL
     ) {
 
     list.attributes <- list();
@@ -130,7 +138,12 @@ getListOfNodes_get.attributes <- function(
             temp.key4s <- unique(DF.temp[,'key4']);
             list.key4s <- list();
             for ( temp.key4 in temp.key4s ) {
-                list.key4s[[ temp.key4 ]] <- DF.temp[DF.temp[,'key4'] == temp.key4,'value'];
+                temp.value <- DF.temp[DF.temp[,'key4'] == temp.key4,'value'];
+                if ( temp.value %in% DF.localization[,"ID"] ) {
+                    DF.one.row <- DF.localization[DF.localization[,"ID"] == temp.value,];
+                    temp.value <- paste0(temp.value," (",DF.one.row[,"english"],", ",DF.one.row[,"french" ],")");
+                    }
+                list.key4s[[ temp.key4 ]] <- temp.value;
                 }
             list.indexes[[ temp.index ]] <- list.key4s;
 
