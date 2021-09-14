@@ -39,10 +39,14 @@ list.oidexit <- getData(
     input.file = file.path(data.directory,data.snapshot,"OIDEXIT_OID_Exit-Prod-V4-0-0_1-0-0_spec.json")
     );
 
-examineData(list.input = list.oidexit);
+list.misc <- examineData(list.input = list.oidexit);
+DF.localization <- list.misc[['DF.localization']];
 
 ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
-results.getListOfNodes <- getListOfNodes(list.input = list.oidexit);
+results.getListOfNodes <- getListOfNodes(
+    list.input      = list.oidexit,
+    DF.localization = DF.localization
+    );
 
 DF.nodes   <- results.getListOfNodes[[  'DF.nodes']];
 list.nodes <- results.getListOfNodes[['list.nodes']];
