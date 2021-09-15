@@ -20,6 +20,7 @@ setwd( output.directory );
 code.files <- c(
     "getData.R",
     "getListOfNodes.R",
+    "getItemToLocalization.R",
     "examineData.R",
     "node.R",
     "printListOfNodes.R"
@@ -40,12 +41,19 @@ list.oidexit <- getData(
     );
 
 list.misc <- examineData(list.input = list.oidexit);
-DF.localization <- list.misc[['DF.localization']];
+
+### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
+DF.item.to.localization <- getItemToLocalization(
+    DF.nested       = list.misc[['DF.nested']],
+    DF.localization = list.misc[['DF.localization']]
+    );
+write.csv(file = "item-to-location-DF.csv",   x      =   DF.item.to.localization);
+saveRDS(  file = "item-to-location-DF.RData", object =   DF.item.to.localization);
 
 ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
 results.getListOfNodes <- getListOfNodes(
     list.input      = list.oidexit,
-    DF.localization = DF.localization
+    DF.localization = list.misc[['DF.localization']]
     );
 
 DF.nodes   <- results.getListOfNodes[[  'DF.nodes']];
