@@ -150,17 +150,9 @@ getListOfNodes_get.attributes <- function(
                     DF.one.row <- DF.localization[DF.localization[,"ID"] == temp.value,];
                     temp.value <- paste0(temp.value," (",DF.one.row[,"english"],", ",DF.one.row[,"french" ],")");
                     }
-                # if ( temp.value %in% c('68d20178-66cb-4971-b041-a1b24ff0cecb')) {
-                #     cat("\n");
-                #     cat("\n# temp.value: ",temp.value,"\n");
-                #     cat("\n# temp.value %in% DF.item.to.localization[,'ID']: ",temp.value %in% DF.item.to.localization[,"ID"],"\n");
-                #     cat("\n# DF.item.to.localization[,'ID']\n");
-                #     print(   DF.item.to.localization[,"ID"]   );
-                #     }
                 if ( temp.value %in% DF.item.to.localization[,"ID"] ) {
                     DF.one.row <- DF.item.to.localization[DF.item.to.localization[,"ID"] == temp.value,];
                     DF.one.row <- DF.one.row[,setdiff(colnames(DF.one.row),"ID")];
-                    # temp.value <- paste0(temp.value," (",DF.one.row[,"english"],", ",DF.one.row[,"french"],")");
                     temp.value <- paste0(temp.value," (",paste(DF.one.row,collapse=", "),")");
                     paste(DF.temp[2,],collapse=", ")
                     }
