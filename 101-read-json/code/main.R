@@ -52,8 +52,9 @@ saveRDS(  file = "item-to-location-DF.RData", object =   DF.item.to.localization
 
 ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
 results.getListOfNodes <- getListOfNodes(
-    list.input      = list.oidexit,
-    DF.localization = list.misc[['DF.localization']]
+    list.input              = list.oidexit,
+    DF.localization         = list.misc[['DF.localization']],
+    DF.item.to.localization = DF.item.to.localization
     );
 
 DF.nodes   <- results.getListOfNodes[[  'DF.nodes']];
