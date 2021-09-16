@@ -19,7 +19,9 @@ setwd( output.directory );
 # source supporting R code
 code.files <- c(
     "getData.R",
+    "getElementIDs.R",
     "getListOfNodes.R",
+    "getItemToElementID.R",
     "getItemToLocalization.R",
     "examineData.R",
     "node.R",
@@ -47,22 +49,36 @@ DF.item.to.localization <- getItemToLocalization(
     DF.nested       = list.misc[['DF.nested']],
     DF.localization = list.misc[['DF.localization']]
     );
-write.csv(file = "item-to-location-DF.csv",   x      =   DF.item.to.localization);
-saveRDS(  file = "item-to-location-DF.RData", object =   DF.item.to.localization);
+write.csv(file = "DF-item-to-location.csv",   x      = DF.item.to.localization);
+saveRDS(  file = "DF-item-to-location.RData", object = DF.item.to.localization);
+
+DF.elementIDs <- getElementIDs(
+    DF.nested = list.misc[['DF.nested']]
+    );
+write.csv(file = "DF-elementIDs.csv",   x      = DF.elementIDs);
+saveRDS(  file = "DF-elementIDs.RData", object = DF.elementIDs);
+
+DF.item.to.elementID <- getItemToElementID(
+    DF.nested     = list.misc[['DF.nested']],
+    DF.elementIDs = DF.elementIDs
+    );
+write.csv(file = "DF-item-to-elementID.csv",   x      = DF.item.to.elementID);
+saveRDS(  file = "DF-item-to-elementID.RData", object = DF.item.to.elementID);
 
 ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
 results.getListOfNodes <- getListOfNodes(
     list.input              = list.oidexit,
     DF.localization         = list.misc[['DF.localization']],
-    DF.item.to.localization = DF.item.to.localization
+    DF.item.to.localization = DF.item.to.localization,
+    DF.item.to.elementID    = DF.item.to.elementID
     );
 
 DF.nodes   <- results.getListOfNodes[[  'DF.nodes']];
 list.nodes <- results.getListOfNodes[['list.nodes']];
 
-write.csv(file = "nodes-DF.csv",     x      =   DF.nodes);
-saveRDS(  file = "nodes-DF.RData",   object =   DF.nodes);
-saveRDS(  file = "nodes-list.RData", object = list.nodes);
+write.csv(file = "DF-nodes.csv",     x      =   DF.nodes);
+saveRDS(  file = "DF-nodes.RData",   object =   DF.nodes);
+saveRDS(  file = "list-nodes.RData", object = list.nodes);
 
 ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
 printListOfNodes(
