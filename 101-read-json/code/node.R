@@ -8,7 +8,7 @@ node <- R6::R6Class(
     public = list(
 
         # instantiation attributes
-        nodeID         = NULL,
+        guid           = NULL,
         depth          = NULL,
         type           = NULL,
         properties     = NULL,
@@ -25,7 +25,7 @@ node <- R6::R6Class(
 
         # methods
         initialize = function(
-            nodeID         = NULL,
+            guid           = NULL,
             depth          = NULL,
             type           = NULL,
             properties     = NULL,
@@ -38,7 +38,7 @@ node <- R6::R6Class(
             condition.if   = NULL,
             condition.then = NULL
             ) {
-                self$nodeID         <- nodeID;
+                self$guid           <- guid;
                 self$depth          <- depth;
                 self$type           <- type;
                 self$properties     <- properties;
@@ -58,8 +58,10 @@ node <- R6::R6Class(
             ) {
             cat("\n");
             cat(paste0(rep(indent,self$depth),collapse="") );
-            cat(paste0("(",self$nodeID,") "));
-            if ( length(self$properties) > 0 ) {
+            if ( is.null(self$properties) | length(self$properties) == 0 ) {
+                cat(paste0("(",self$guid,") "));
+            } else { # if ( length(self$properties) > 0 )
+                cat(paste0("(",self$guid,") "));
                 properties.vector <- c();
                 for ( i in seq(1,length(self$properties)) ) {
                     for ( temp.key in names(self$properties[[i]]) ) {

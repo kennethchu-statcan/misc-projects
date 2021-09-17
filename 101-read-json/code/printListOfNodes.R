@@ -16,9 +16,9 @@ printListOfNodes <- function(
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
     list.nodes[['Root']]$print_node();
-    for ( child.ID in list.nodes[['Root']]$get_offspring_IDs() ) {
+    for ( child.guid in list.nodes[['Root']]$get_offspring_IDs() ) {
         printListOfNodes_print.children.nodes(
-            nodeID     = child.ID,
+            guid       = child.guid,
             list.nodes = list.nodes,
             indent     = '    '
             );
@@ -39,15 +39,15 @@ printListOfNodes <- function(
 
 ##################################################
 printListOfNodes_print.children.nodes <- function(
-    nodeID     = NULL,
+    guid       = NULL,
     list.nodes = NULL,
     indent     = '  '
     ) {
-    list.nodes[[nodeID]]$print_node(indent = indent);
-    if ( length(list.nodes[[nodeID]]$get_offspring_IDs()) > 0 ) {
-        for ( child.ID in list.nodes[[nodeID]]$get_offspring_IDs() ) {
+    list.nodes[[guid]]$print_node(indent = indent);
+    if ( length(list.nodes[[guid]]$get_offspring_IDs()) > 0 ) {
+        for ( child.guid in list.nodes[[guid]]$get_offspring_IDs() ) {
             printListOfNodes_print.children.nodes(
-                nodeID     = child.ID,
+                guid       = child.guid,
                 list.nodes = list.nodes,
                 indent     = indent
                 );
