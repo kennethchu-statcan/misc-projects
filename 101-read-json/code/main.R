@@ -19,7 +19,7 @@ setwd( output.directory );
 # source supporting R code
 code.files <- c(
     "getData.R",
-    "getElementIDs.R",
+    "getReferentIDToElementID.R",
     "getListOfNodes.R",
     "getItemToElementID.R",
     "getItemToLocalization.R",
@@ -52,25 +52,33 @@ DF.item.to.localization <- getItemToLocalization(
 write.csv(file = "DF-item-to-location.csv",   x      = DF.item.to.localization);
 saveRDS(  file = "DF-item-to-location.RData", object = DF.item.to.localization);
 
-DF.elementIDs <- getElementIDs(
+DF.referentID.to.elementID <- getReferentIDToElementID(
     DF.nested = list.misc[['DF.nested']]
     );
-write.csv(file = "DF-elementIDs.csv",   x      = DF.elementIDs);
-saveRDS(  file = "DF-elementIDs.RData", object = DF.elementIDs);
+write.csv(file = "DF-referentID-to-elementIDs.csv",   x      = DF.referentID.to.elementID);
+saveRDS(  file = "DF-referentID-to-elementIDs.RData", object = DF.referentID.to.elementID);
 
 DF.item.to.elementID <- getItemToElementID(
-    DF.nested     = list.misc[['DF.nested']],
-    DF.elementIDs = DF.elementIDs
+    DF.nested                  = list.misc[['DF.nested']],
+    DF.referentID.to.elementID = DF.referentID.to.elementID
+    );
+write.csv(file = "DF-item-to-elementID.csv",   x      = DF.item.to.elementID);
+saveRDS(  file = "DF-item-to-elementID.RData", object = DF.item.to.elementID);
+
+DF.item.to.elementID <- getItemToElementID(
+    DF.nested                  = list.misc[['DF.nested']],
+    DF.referentID.to.elementID = DF.referentID.to.elementID
     );
 write.csv(file = "DF-item-to-elementID.csv",   x      = DF.item.to.elementID);
 saveRDS(  file = "DF-item-to-elementID.RData", object = DF.item.to.elementID);
 
 ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
 results.getListOfNodes <- getListOfNodes(
-    list.input              = list.oidexit,
-    DF.localization         = list.misc[['DF.localization']],
-    DF.item.to.localization = DF.item.to.localization,
-    DF.item.to.elementID    = DF.item.to.elementID
+    list.input                 = list.oidexit,
+    DF.localization            = list.misc[['DF.localization']],
+    DF.item.to.localization    = DF.item.to.localization,
+    DF.referentID.to.elementID = DF.referentID.to.elementID,
+    DF.item.to.elementID       = DF.item.to.elementID
     );
 
 DF.nodes   <- results.getListOfNodes[[  'DF.nodes']];
