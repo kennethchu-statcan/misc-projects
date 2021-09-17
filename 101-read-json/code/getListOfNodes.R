@@ -182,7 +182,8 @@ getListOfNodes_get.attributes <- function(
                     }
                 if ( temp.value %in% DF.localization[,"localizationID"] ) {
                     DF.one.row  <- DF.localization[DF.localization[,"localizationID"] == temp.value,];
-                    temp.string <- paste0(temp.string," (",DF.one.row[,"english"],", ",DF.one.row[,"french" ],")");
+                    # temp.string <- paste0(temp.string," (",DF.one.row[,"english"],", ",DF.one.row[,"french" ],")");
+                    temp.string <- paste0("(",DF.one.row[,"english"],", ",DF.one.row[,"french" ],")");
                     }
 
                 list.key4s[[ temp.key4 ]] <- temp.string;
