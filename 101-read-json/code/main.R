@@ -19,6 +19,8 @@ setwd( output.directory );
 # source supporting R code
 code.files <- c(
     "getData.R",
+    "getGuidToElementID.R",
+    "getReferenceIDToReferentID.R",
     "getReferentIDToElementID.R",
     "getListOfNodes.R",
     "getItemToElementID.R",
@@ -45,12 +47,11 @@ list.oidexit <- getData(
 list.misc <- examineData(list.input = list.oidexit);
 
 ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
-DF.item.to.localization <- getItemToLocalization(
-    DF.nested       = list.misc[['DF.nested']],
-    DF.localization = list.misc[['DF.localization']]
+DF.referenceID.to.referentID <- getReferenceIDToReferentID(
+    DF.nested = list.misc[['DF.nested']]
     );
-write.csv(file = "DF-item-to-location.csv",   x      = DF.item.to.localization);
-saveRDS(  file = "DF-item-to-location.RData", object = DF.item.to.localization);
+write.csv(file = "DF-referenceID-to-referentID.csv",   x      = DF.referenceID.to.referentID);
+saveRDS(  file = "DF-referenceID-to-referentID.RData", object = DF.referenceID.to.referentID);
 
 DF.referentID.to.elementID <- getReferentIDToElementID(
     DF.nested = list.misc[['DF.nested']]
@@ -58,19 +59,29 @@ DF.referentID.to.elementID <- getReferentIDToElementID(
 write.csv(file = "DF-referentID-to-elementIDs.csv",   x      = DF.referentID.to.elementID);
 saveRDS(  file = "DF-referentID-to-elementIDs.RData", object = DF.referentID.to.elementID);
 
+### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
+DF.item.to.localization <- getItemToLocalization(
+    DF.nested                    = list.misc[['DF.nested']],
+    DF.referenceID.to.referentID = DF.referenceID.to.referentID,
+    DF.localization              = list.misc[['DF.localization']]
+    );
+write.csv(file = "DF-item-to-location.csv",   x      = DF.item.to.localization);
+saveRDS(  file = "DF-item-to-location.RData", object = DF.item.to.localization);
+
 DF.item.to.elementID <- getItemToElementID(
-    DF.nested                  = list.misc[['DF.nested']],
-    DF.referentID.to.elementID = DF.referentID.to.elementID
+    DF.nested                    = list.misc[['DF.nested']],
+    DF.referenceID.to.referentID = DF.referenceID.to.referentID,
+    DF.referentID.to.elementID   = DF.referentID.to.elementID
     );
 write.csv(file = "DF-item-to-elementID.csv",   x      = DF.item.to.elementID);
 saveRDS(  file = "DF-item-to-elementID.RData", object = DF.item.to.elementID);
 
-# DF.item.to.elementID <- getItemToElementID(
-#     DF.nested                  = list.misc[['DF.nested']],
-#     DF.referentID.to.elementID = DF.referentID.to.elementID
-#     );
-# write.csv(file = "DF-item-to-elementID.csv",   x      = DF.item.to.elementID);
-# saveRDS(  file = "DF-item-to-elementID.RData", object = DF.item.to.elementID);
+DF.guid.to.elementID <- getGuidToElementID(
+    DF.nested                  = list.misc[['DF.nested']],
+    DF.referentID.to.elementID = DF.referentID.to.elementID
+    );
+write.csv(file = "DF-guid-to-elementID.csv",   x      = DF.guid.to.elementID);
+saveRDS(  file = "DF-guid-to-elementID.RData", object = DF.guid.to.elementID);
 
 ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
 results.getListOfNodes <- getListOfNodes(

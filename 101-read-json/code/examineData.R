@@ -120,6 +120,12 @@ examineData_localization <- function(
         all = TRUE
         );
 
+    colnames(DF.output) <- gsub(
+        x           = colnames(DF.output),
+        pattern     = "^ID$",
+        replacement = "localizationID"
+        );
+
     DF.output <- DF.output[order(DF.output[,'index']),];
     DF.output <- DF.output[,setdiff(colnames(DF.output),'index')];
     return( DF.output );

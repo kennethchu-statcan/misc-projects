@@ -1,7 +1,8 @@
 
 getItemToLocalization <- function(
-    DF.nested       = NULL,
-    DF.localization = NULL
+    DF.nested                    = NULL,
+    DF.referenceID.to.referentID = NULL,
+    DF.localization              = NULL
     ) {
 
     thisFunctionName <- "getItemToLocalization";
@@ -11,15 +12,14 @@ getItemToLocalization <- function(
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
     DF.output <- DF.nested[DF.nested[,'key1'] != 'Reference',];
     DF.output <- DF.output[DF.output[,'key4'] %in% c('datapointValue','displayTarget','gotoTarget'),c('key4','value')];
-    colnames(DF.output) <- gsub(x = colnames(DF.output), pattern = "^value$", replacement = "ID")
-
-    DF.references <- DF.nested[        DF.nested[,'key2'] == 'References',];
-    DF.references <- DF.references[DF.references[,'key4'] == 'referentId',c('key3','value')];
-    colnames(DF.references) <- gsub(x = colnames(DF.references), pattern = "^key3$",  replacement = "ID");
-    colnames(DF.references) <- gsub(x = colnames(DF.references), pattern = "^value$", replacement = "referentId");
+    colnames(DF.output) <- gsub(x = colnames(DF.output), pattern = "^value$", replacement = "referenceID");
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
-    DF.output <- merge(x = DF.output, y = DF.references, by = "ID")
+    DF.output <- merge(
+        x  = DF.output,
+        y  = DF.referenceID.to.referentID,
+        by = "referenceID"
+        );
     DF.output <- DF.output[,setdiff(colnames(DF.output),"key4")];
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
@@ -27,7 +27,7 @@ getItemToLocalization <- function(
         x     = DF.output,
         y     = DF.nested[DF.nested[,'key4'] == 'id',c('value','key2')],
         all.x = TRUE,
-        by.x  = 'referentId',
+        by.x  = 'referentID',
         by.y  = 'value'
         );
 
@@ -38,18 +38,18 @@ getItemToLocalization <- function(
         all.x = TRUE,
         by    = 'key2'
         );
-    DF.output <- DF.output[,c('ID','referentId','key2','value')];
-    colnames(DF.output) <- gsub(x = colnames(DF.output), pattern = "^value$", replacement = "localization.ID")
+    DF.output <- DF.output[,c('referenceID','referentID','key2','value')];
+    colnames(DF.output) <- gsub(x = colnames(DF.output), pattern = "^value$", replacement = "localizationID")
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
     DF.output <- merge(
         x     = DF.output,
         y     = DF.localization,
         all.x = TRUE,
-        by.x  = 'localization.ID',
-        by.y  = 'ID'
+        by.x  = 'localizationID',
+        by.y  = 'localizationID'
         );
-    DF.output <- DF.output[,c('ID','referentId','key2','localization.ID','english','french')];
+    DF.output <- DF.output[,c('referenceID','referentID','key2','localizationID','english','french')];
 
     cat("\n# DF.output\n");
     print(   DF.output   );

@@ -1,7 +1,8 @@
 
 getItemToElementID <- function(
-    DF.nested                  = NULL,
-    DF.referentID.to.elementID = NULL
+    DF.nested                    = NULL,
+    DF.referenceID.to.referentID = NULL,
+    DF.referentID.to.elementID   = NULL
     ) {
 
     thisFunctionName <- "getItemToElementID";
@@ -11,15 +12,14 @@ getItemToElementID <- function(
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
     DF.output <- DF.nested[DF.nested[,'key1'] != 'Reference',];
     DF.output <- DF.output[DF.output[,'key4'] %in% c('datapointValue','displayTarget','gotoTarget'),c('key4','value')];
-    colnames(DF.output) <- gsub(x = colnames(DF.output), pattern = "^value$", replacement = "ID")
-
-    DF.references <- DF.nested[        DF.nested[,'key2'] == 'References',];
-    DF.references <- DF.references[DF.references[,'key4'] == 'referentId',c('key3','value')];
-    colnames(DF.references) <- gsub(x = colnames(DF.references), pattern = "^key3$",  replacement = "ID");
-    colnames(DF.references) <- gsub(x = colnames(DF.references), pattern = "^value$", replacement = "referentId");
+    colnames(DF.output) <- gsub(x = colnames(DF.output), pattern = "^value$", replacement = "referenceID")
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
-    DF.output <- merge(x = DF.output, y = DF.references, by = "ID")
+    DF.output <- merge(
+        x  = DF.output,
+        y  = DF.referenceID.to.referentID,
+        by = "referenceID"
+        );
     DF.output <- DF.output[,setdiff(colnames(DF.output),"key4")];
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
@@ -27,10 +27,10 @@ getItemToElementID <- function(
         x     = DF.output,
         y     = DF.referentID.to.elementID,
         all.x = TRUE,
-        by.x  = 'referentId',
-        by.y  = 'ID'
+        by.x  = 'referentID',
+        by.y  = 'referentID'
         );
-    DF.output <- DF.output[,c('ID', 'referentId',	'elementID')];
+    DF.output <- DF.output[,c('referenceID','referentID','elementID')];
 
     cat("\n# str(DF.output)\n");
     print(   str(DF.output)   );

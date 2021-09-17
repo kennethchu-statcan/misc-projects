@@ -161,8 +161,8 @@ getListOfNodes_get.attributes <- function(
             for ( temp.key4 in temp.key4s ) {
                 temp.value  <- DF.temp[DF.temp[,'key4'] == temp.key4,'value'];
                 temp.string <- temp.value;
-                if ( temp.value %in% DF.localization[,"ID"] ) {
-                    DF.one.row  <- DF.localization[DF.localization[,"ID"] == temp.value,];
+                if ( temp.value %in% DF.localization[,"localizationID"] ) {
+                    DF.one.row  <- DF.localization[DF.localization[,"localizationID"] == temp.value,];
                     temp.string <- paste0(temp.string," (",DF.one.row[,"english"],", ",DF.one.row[,"french" ],")");
                     }
                 # if ( temp.value %in% DF.item.to.localization[,"ID"] ) {
@@ -170,14 +170,14 @@ getListOfNodes_get.attributes <- function(
                 #     DF.one.row  <- DF.one.row[,setdiff(colnames(DF.one.row),"ID")];
                 #     temp.string <- paste0(temp.string," (",paste(DF.one.row,collapse=", "),")");
                 #     }
-                if ( temp.value %in% DF.referentID.to.elementID[,"ID"] ) {
-                    DF.one.row  <- DF.referentID.to.elementID[DF.referentID.to.elementID[,"ID"] == temp.value,];
-                    DF.one.row  <- DF.one.row[,setdiff(colnames(DF.one.row),"ID")];
+                if ( temp.value %in% DF.referentID.to.elementID[,"referentID"] ) {
+                    DF.one.row  <- DF.referentID.to.elementID[DF.referentID.to.elementID[,"referentID"] == temp.value,];
+                    DF.one.row  <- DF.one.row[,setdiff(colnames(DF.one.row),"referentID")];
                     temp.string <- paste0(temp.string," (",paste(DF.one.row,collapse=", "),")");
                     }
-                if ( temp.value %in% DF.item.to.elementID[,"ID"] ) {
-                    DF.one.row  <- DF.item.to.elementID[DF.item.to.elementID[,"ID"] == temp.value,];
-                    DF.one.row  <- DF.one.row[,setdiff(colnames(DF.one.row),"ID")];
+                if ( temp.value %in% DF.item.to.elementID[,"referenceID"] ) {
+                    DF.one.row  <- DF.item.to.elementID[DF.item.to.elementID[,"referenceID"] == temp.value,];
+                    DF.one.row  <- DF.one.row[,setdiff(colnames(DF.one.row),"referenceID")];
                     temp.string <- paste0(temp.string," (",paste(DF.one.row,collapse=", "),")");
                     }
                 list.key4s[[ temp.key4 ]] <- temp.string;
