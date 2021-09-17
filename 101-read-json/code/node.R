@@ -61,7 +61,6 @@ node <- R6::R6Class(
             if ( is.null(self$properties) | length(self$properties) == 0 ) {
                 cat(paste0("(",self$guid,") "));
             } else { # if ( length(self$properties) > 0 )
-                cat(paste0("(",self$guid,") "));
                 properties.vector <- c();
                 for ( i in seq(1,length(self$properties)) ) {
                     for ( temp.key in names(self$properties[[i]]) ) {
@@ -70,8 +69,12 @@ node <- R6::R6Class(
                         properties.vector <- c(properties.vector,temp.string);
                         }
                     }
+                # cat(paste0("(",self$guid,") "));
+                properties.string <- paste0(properties.vector, collapse = "; ");
+                cat(paste0("(",private$guid.substitute(properties.string = properties.string),") "));
                 cat(": ");
-                cat(paste0(properties.vector, collapse = "; "));
+                properties.string <- gsub(x = properties.string, pattern = paste0(private$pattern.referentID.elementID,"[; ]{,2}"), replacement = "");
+                cat(properties.string);
                 }
             },
 
@@ -90,6 +93,26 @@ node <- R6::R6Class(
 
         ), # public = list()
 
-    private = list() # private = list()
+    private = list(
+
+        pattern.referentID.elementID = "id = [a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+ \\([a-zA-Z0-9_]+\\)",
+        pattern.referentID           = "id = [a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+ ",
+
+        guid.substitute = function(properties.string = "") {
+            match.result <- gregexpr(pattern = private$pattern.referentID.elementID, text = properties.string);
+            if ( as.integer(match.result) < 0 ) {
+                return( self$guid )
+            } else {
+                output.string <- substr(x = properties.string, start = match.result, stop = -1 + as.integer(match.result) + attr(match.result[[1]],"match.length"));
+                output.string <- gsub(x = output.string, pattern = private$pattern.referentID, replacement = "");
+                output.string <- gsub(x = output.string, pattern = "(\\(|\\))", replacement = "");
+                if ( output.string != self$guid ) {
+                    output.string <- paste0(self$guid,", ",output.string);
+                    }
+                return(output.string);
+                }
+            }
+
+        ) # private = list()
 
     );

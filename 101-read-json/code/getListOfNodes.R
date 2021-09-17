@@ -3,6 +3,7 @@ getListOfNodes <- function(
     list.input                 = NULL,
     DF.localization            = NULL,
     DF.item.to.localization    = NULL,
+    DF.guid.to.elementID       = NULL,
     DF.referentID.to.elementID = NULL,
     DF.item.to.elementID       = NULL
     ) {
@@ -17,6 +18,9 @@ getListOfNodes <- function(
 
     cat("\nstr(DF.item.to.localization)\n");
     print( str(DF.item.to.localization)   );
+
+    cat("\nstr(DF.referenceID.to.referentID)\n");
+    print( str(DF.referenceID.to.referentID)   );
 
     cat("\nstr(DF.referentID.to.elementID)\n");
     print( str(DF.referentID.to.elementID)   );
@@ -57,6 +61,7 @@ getListOfNodes <- function(
         DF.input                   = DF.nested[DF.nested[,'key2'] == current.guid,],
         DF.localization            = DF.localization,
         DF.item.to.localization    = DF.item.to.localization,
+        DF.guid.to.elementID       = DF.guid.to.elementID,
         DF.referentID.to.elementID = DF.referentID.to.elementID,
         DF.item.to.elementID       = DF.item.to.elementID
         );
@@ -92,6 +97,7 @@ getListOfNodes <- function(
                 DF.input                   = DF.nested[DF.nested[,'key2'] == guid,],
                 DF.localization            = DF.localization,
                 DF.item.to.localization    = DF.item.to.localization,
+                DF.guid.to.elementID       = DF.guid.to.elementID,
                 DF.referentID.to.elementID = DF.referentID.to.elementID,
                 DF.item.to.elementID       = DF.item.to.elementID
                 );
@@ -125,6 +131,7 @@ getListOfNodes_get.attributes <- function(
     DF.input                   = NULL,
     DF.localization            = NULL,
     DF.item.to.localization    = NULL,
+    DF.guid.to.elementID       = NULL,
     DF.referentID.to.elementID = NULL,
     DF.item.to.elementID       = NULL
     ) {
@@ -159,28 +166,27 @@ getListOfNodes_get.attributes <- function(
             temp.key4s <- unique(DF.temp[,'key4']);
             list.key4s <- list();
             for ( temp.key4 in temp.key4s ) {
+
                 temp.value  <- DF.temp[DF.temp[,'key4'] == temp.key4,'value'];
                 temp.string <- temp.value;
-                if ( temp.value %in% DF.localization[,"localizationID"] ) {
-                    DF.one.row  <- DF.localization[DF.localization[,"localizationID"] == temp.value,];
-                    temp.string <- paste0(temp.string," (",DF.one.row[,"english"],", ",DF.one.row[,"french" ],")");
-                    }
-                # if ( temp.value %in% DF.item.to.localization[,"ID"] ) {
-                #     DF.one.row  <- DF.item.to.localization[DF.item.to.localization[,"ID"] == temp.value,];
-                #     DF.one.row  <- DF.one.row[,setdiff(colnames(DF.one.row),"ID")];
-                #     temp.string <- paste0(temp.string," (",paste(DF.one.row,collapse=", "),")");
-                #     }
-                if ( temp.value %in% DF.referentID.to.elementID[,"referentID"] ) {
-                    DF.one.row  <- DF.referentID.to.elementID[DF.referentID.to.elementID[,"referentID"] == temp.value,];
-                    DF.one.row  <- DF.one.row[,setdiff(colnames(DF.one.row),"referentID")];
-                    temp.string <- paste0(temp.string," (",paste(DF.one.row,collapse=", "),")");
-                    }
+
                 if ( temp.value %in% DF.item.to.elementID[,"referenceID"] ) {
                     DF.one.row  <- DF.item.to.elementID[DF.item.to.elementID[,"referenceID"] == temp.value,];
                     DF.one.row  <- DF.one.row[,setdiff(colnames(DF.one.row),"referenceID")];
                     temp.string <- paste0(temp.string," (",paste(DF.one.row,collapse=", "),")");
                     }
+                if ( temp.value %in% DF.referentID.to.elementID[,"referentID"] ) {
+                    DF.one.row  <- DF.referentID.to.elementID[DF.referentID.to.elementID[,"referentID"] == temp.value,];
+                    DF.one.row  <- DF.one.row[,setdiff(colnames(DF.one.row),"referentID")];
+                    temp.string <- paste0(temp.string," (",paste(DF.one.row,collapse=", "),")");
+                    }
+                if ( temp.value %in% DF.localization[,"localizationID"] ) {
+                    DF.one.row  <- DF.localization[DF.localization[,"localizationID"] == temp.value,];
+                    temp.string <- paste0(temp.string," (",DF.one.row[,"english"],", ",DF.one.row[,"french" ],")");
+                    }
+
                 list.key4s[[ temp.key4 ]] <- temp.string;
+
                 }
             list.indexes[[ temp.index ]] <- list.key4s;
 
