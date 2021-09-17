@@ -1,7 +1,7 @@
 
 getItemToElementID <- function(
-    DF.nested     = NULL,
-    DF.elementIDs = NULL
+    DF.nested                  = NULL,
+    DF.referentID.to.elementID = NULL
     ) {
 
     thisFunctionName <- "getItemToElementID";
@@ -25,7 +25,7 @@ getItemToElementID <- function(
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
     DF.output <- merge(
         x     = DF.output,
-        y     = DF.elementIDs,
+        y     = DF.referentID.to.elementID,
         all.x = TRUE,
         by.x  = 'referentId',
         by.y  = 'ID'
