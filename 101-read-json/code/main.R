@@ -65,12 +65,12 @@ DF.item.to.elementID <- getItemToElementID(
 write.csv(file = "DF-item-to-elementID.csv",   x      = DF.item.to.elementID);
 saveRDS(  file = "DF-item-to-elementID.RData", object = DF.item.to.elementID);
 
-DF.item.to.elementID <- getItemToElementID(
-    DF.nested                  = list.misc[['DF.nested']],
-    DF.referentID.to.elementID = DF.referentID.to.elementID
-    );
-write.csv(file = "DF-item-to-elementID.csv",   x      = DF.item.to.elementID);
-saveRDS(  file = "DF-item-to-elementID.RData", object = DF.item.to.elementID);
+# DF.item.to.elementID <- getItemToElementID(
+#     DF.nested                  = list.misc[['DF.nested']],
+#     DF.referentID.to.elementID = DF.referentID.to.elementID
+#     );
+# write.csv(file = "DF-item-to-elementID.csv",   x      = DF.item.to.elementID);
+# saveRDS(  file = "DF-item-to-elementID.RData", object = DF.item.to.elementID);
 
 ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
 results.getListOfNodes <- getListOfNodes(
