@@ -27,7 +27,8 @@ printListOfNodes <- function(
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
     if ( !is.null(txt.output) ) {
-        sink(file = NULL, type = "output" );
+        sink(file = NULL, type = "output");
+        close(file.output);
         }
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
@@ -52,5 +53,10 @@ printListOfNodes_print.children.nodes <- function(
                 indent     = indent
                 );
             }
+        }
+    if (grepl(x = guid, pattern = "^Condition_")) {
+        cat(")");
+    } else if (grepl(x = guid, pattern = "ConditionGroup_")) {
+        cat(" )");
         }
     }
