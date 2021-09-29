@@ -38,6 +38,7 @@ getListOfNodes <- function(
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
     DF.nested[DF.nested[,'key3'] == 'if',  'key3'] <- 'condition.if';
     DF.nested[DF.nested[,'key3'] == 'then','key3'] <- 'condition.then';
+    DF.nested[DF.nested[,'key3'] == 'else','key3'] <- 'condition.else';
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
     cat("\nstr(DF.nested)\n");
@@ -66,18 +67,22 @@ getListOfNodes <- function(
         DF.item.to.elementID       = DF.item.to.elementID
         );
     list.nodes[[ current.guid ]] <- node$new(
-        guid           = current.guid,
-        depth          = current.depth,
-        type           = list.attributes[['type'          ]],
-        properties     = list.attributes[['properties'    ]],
-        parent         = list.attributes[['parent'        ]],
-        children       = list.attributes[['children'      ]],
-        rows           = list.attributes[['rows'          ]],
-        columns        = list.attributes[['columns'       ]],
-        displayLogic   = list.attributes[['displayLogic'  ]],
-        enterLogic     = list.attributes[['enterLogic'    ]],
-        condition.if   = list.attributes[['condition.if'  ]],
-        condition.then = list.attributes[['condition.then']]
+        guid            = current.guid,
+        depth           = current.depth,
+        type            = list.attributes[['type'           ]],
+        properties      = list.attributes[['properties'     ]],
+        parent          = list.attributes[['parent'         ]],
+        children        = list.attributes[['children'       ]],
+        rows            = list.attributes[['rows'           ]],
+        columns         = list.attributes[['columns'        ]],
+        initLogic       = list.attributes[['initLogic'      ]],
+        displayLogic    = list.attributes[['displayLogic'   ]],
+        enterLogic      = list.attributes[['enterLogic'     ]],
+        exitLogic       = list.attributes[['exitLogic'      ]],
+        validationLogic = list.attributes[['validationLogic']],
+        condition.if    = list.attributes[['condition.if'   ]],
+        condition.then  = list.attributes[['condition.then' ]],
+        condition.else  = list.attributes[['condition.else' ]]
         );
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
@@ -86,7 +91,7 @@ getListOfNodes <- function(
 
         DF.temp        <- DF.nested[!is.na(DF.nested[,'depth']) & DF.nested[,'depth'] == current.depth,];
         # children.IDs <- unique(DF.temp[DF.temp[,'key3'] == 'children','value']);
-        children.IDs   <- unique(DF.temp[DF.temp[,'key3'] %in% c('children','rows','columns','displayLogic','enterLogic','condition.if','condition.then'),'value']);
+        children.IDs   <- unique(DF.temp[DF.temp[,'key3'] %in% c('children','rows','columns','initLogic','displayLogic','enterLogic','exitLogic','validationLogic','condition.if','condition.then','condition.else'),'value']);
         current.guids  <- setdiff(current.guids,children.IDs);
 
         current.depth <- current.depth + 1;
@@ -102,18 +107,22 @@ getListOfNodes <- function(
                 DF.item.to.elementID       = DF.item.to.elementID
                 );
             list.nodes[[ guid ]] <- node$new(
-                guid           = guid,
-                depth          = current.depth,
-                type           = list.attributes[['type'          ]],
-                properties     = list.attributes[['properties'    ]],
-                parent         = list.attributes[['parent'        ]],
-                children       = list.attributes[['children'      ]],
-                rows           = list.attributes[['rows'          ]],
-                columns        = list.attributes[['columns'       ]],
-                displayLogic   = list.attributes[['displayLogic'  ]],
-                enterLogic     = list.attributes[['enterLogic'    ]],
-                condition.if   = list.attributes[['condition.if'  ]],
-                condition.then = list.attributes[['condition.then']]
+                guid            = guid,
+                depth           = current.depth,
+                type            = list.attributes[['type'           ]],
+                properties      = list.attributes[['properties'     ]],
+                parent          = list.attributes[['parent'         ]],
+                children        = list.attributes[['children'       ]],
+                rows            = list.attributes[['rows'           ]],
+                columns         = list.attributes[['columns'        ]],
+                initLogic       = list.attributes[['initLogic'      ]],
+                displayLogic    = list.attributes[['displayLogic'   ]],
+                enterLogic      = list.attributes[['enterLogic'     ]],
+                exitLogic       = list.attributes[['exitLogic'      ]],
+                validationLogic = list.attributes[['validationLogic']],
+                condition.if    = list.attributes[['condition.if'   ]],
+                condition.then  = list.attributes[['condition.then' ]],
+                condition.else  = list.attributes[['condition.else' ]]
                 );
             }
 
@@ -145,10 +154,14 @@ getListOfNodes_get.attributes <- function(
         'children',
         'rows',
         'columns',
+        'initLogic',
         'displayLogic',
         'enterLogic',
+        'exitLogic',
+        'validationLogic',
         'condition.if',
-        'condition.then'
+        'condition.then',
+        'condition.else'
         )
 
     for ( attribute.type in attribute.types ) {
