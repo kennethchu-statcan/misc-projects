@@ -8,48 +8,60 @@ node <- R6::R6Class(
     public = list(
 
         # instantiation attributes
-        guid           = NULL,
-        depth          = NULL,
-        type           = NULL,
-        properties     = NULL,
-        parent         = NULL,
-        children       = NULL,
-        rows           = NULL,
-        columns        = NULL,
-        displayLogic   = NULL,
-        enterLogic     = NULL,
-        condition.if   = NULL,
-        condition.then = NULL,
+        guid            = NULL,
+        depth           = NULL,
+        type            = NULL,
+        properties      = NULL,
+        parent          = NULL,
+        children        = NULL,
+        rows            = NULL,
+        columns         = NULL,
+        initLogic       = NULL,
+        displayLogic    = NULL,
+        enterLogic      = NULL,
+        exitLogic       = NULL,
+        validationLogic = NULL,
+        condition.if    = NULL,
+        condition.then  = NULL,
+        condition.else  = NULL,
 
         # derived attributes
 
         # methods
         initialize = function(
-            guid           = NULL,
-            depth          = NULL,
-            type           = NULL,
-            properties     = NULL,
-            parent         = NULL,
-            children       = NULL,
-            rows           = NULL,
-            columns        = NULL,
-            displayLogic   = NULL,
-            enterLogic     = NULL,
-            condition.if   = NULL,
-            condition.then = NULL
+            guid            = NULL,
+            depth           = NULL,
+            type            = NULL,
+            properties      = NULL,
+            parent          = NULL,
+            children        = NULL,
+            rows            = NULL,
+            columns         = NULL,
+            initLogic       = NULL,
+            displayLogic    = NULL,
+            enterLogic      = NULL,
+            exitLogic       = NULL,
+            validationLogic = NULL,
+            condition.if    = NULL,
+            condition.then  = NULL,
+            condition.else  = NULL
             ) {
-                self$guid           <- guid;
-                self$depth          <- depth;
-                self$type           <- type;
-                self$properties     <- properties;
-                self$parent         <- parent;
-                self$children       <- children;
-                self$rows           <- rows;
-                self$columns        <- columns;
-                self$displayLogic   <- displayLogic;
-                self$enterLogic     <- enterLogic;
-                self$condition.if   <- condition.if;
-                self$condition.then <- condition.then;
+                self$guid            <- guid;
+                self$depth           <- depth;
+                self$type            <- type;
+                self$properties      <- properties;
+                self$parent          <- parent;
+                self$children        <- children;
+                self$rows            <- rows;
+                self$columns         <- columns;
+                self$initLogic       <- initLogic;
+                self$displayLogic    <- displayLogic;
+                self$enterLogic      <- enterLogic;
+                self$exitLogic       <- exitLogic;
+                self$validationLogic <- validationLogic;
+                self$condition.if    <- condition.if;
+                self$condition.then  <- condition.then;
+                self$condition.else  <- condition.else;
                 private$generate_properties();
             },
 
@@ -78,13 +90,17 @@ node <- R6::R6Class(
 
         get_offspring_IDs = function() {
             vector.output <- unique(c(
-                as.vector(unlist(self$children      )),
-                as.vector(unlist(self$rows          )),
-                as.vector(unlist(self$columns       )),
-                as.vector(unlist(self$displayLogic  )),
-                as.vector(unlist(self$enterLogic    )),
-                as.vector(unlist(self$condition.if  )),
-                as.vector(unlist(self$condition.then))
+                as.vector(unlist(self$children       )),
+                as.vector(unlist(self$rows           )),
+                as.vector(unlist(self$columns        )),
+                as.vector(unlist(self$initLogic      )),
+                as.vector(unlist(self$displayLogic   )),
+                as.vector(unlist(self$enterLogic     )),
+                as.vector(unlist(self$exitLogic      )),
+                as.vector(unlist(self$validationLogic)),
+                as.vector(unlist(self$condition.if   )),
+                as.vector(unlist(self$condition.then )),
+                as.vector(unlist(self$condition.else ))
                 ));
             return(vector.output);
             }
