@@ -27,7 +27,7 @@ getListOfNodes <- function(
     print( str(DF.referentID.to.elementID)   );
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
-    DF.nested <- examineData_nested(
+    DF.nested <- tabularizeData_nested(
         list.input = list.input
         );
 
@@ -149,7 +149,7 @@ getListOfNodes_get.attributes <- function(
     list.attributes <- list();
     list.attributes[[ 'type' ]] <- DF.input[1,'key1'];
 
-    attribute.types <- setdiff(attribute.types,c('parent','properties')); # 'properties' do NOT correspond to separate nodes 
+    attribute.types <- setdiff(attribute.types,c('parent','properties')); # 'properties' do NOT correspond to separate nodes
     for ( attribute.type in attribute.types ) {
 
         list.attributes[[ attribute.type ]] <- NULL;

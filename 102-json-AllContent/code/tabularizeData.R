@@ -1,5 +1,5 @@
 
-examineData <- function(
+tabularizeData <- function(
     list.input       = NULL,
     csv.nested       = "table-nested.csv",
     csv.non.nested   = "table-non-nested.csv",
@@ -7,7 +7,7 @@ examineData <- function(
     csv.localization = "table-localization.csv"
     ) {
 
-    thisFunctionName <- "examineData";
+    thisFunctionName <- "tabularizeData";
     cat("\n### ~~~~~~~~~~~~~~~~~~~~ ###");
     cat(paste0("\n",thisFunctionName,"() starts.\n\n"));
 
@@ -16,7 +16,7 @@ examineData <- function(
     print( names(list.input)   );
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
-    DF.diagnostics <- examineData_list.names(list.input = list.input);
+    DF.diagnostics <- tabularizeData_list.names(list.input = list.input);
 
     write.csv(
         x         = DF.diagnostics,
@@ -27,11 +27,11 @@ examineData <- function(
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
     # temp.names <- c('Reference','Localization');
     # for ( temp.name in temp.names ) {
-    #     examineData_str(list.input = list.input, temp.name = temp.name);
+    #     tabularizeData_str(list.input = list.input, temp.name = temp.name);
     #     }
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
-    DF.nested <- examineData_nested(
+    DF.nested <- tabularizeData_nested(
         list.input = list.input
         );
 
@@ -51,7 +51,7 @@ examineData <- function(
         );
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
-    DF.non.nested <- examineData_non.nested(
+    DF.non.nested <- tabularizeData_non.nested(
         list.input = list.input
         );
 
@@ -65,7 +65,7 @@ examineData <- function(
         );
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
-    DF.localization <- examineData_localization(
+    DF.localization <- tabularizeData_localization(
         list.input = list.input
         );
 
@@ -94,7 +94,7 @@ examineData <- function(
     }
 
 ##################################################
-examineData_localization <- function(
+tabularizeData_localization <- function(
     list.input = NULL
     ) {
 
@@ -132,7 +132,7 @@ examineData_localization <- function(
 
     }
 
-examineData_nested <- function(
+tabularizeData_nested <- function(
     list.input = NULL
     ) {
     DF.output   <- data.frame();
@@ -203,7 +203,7 @@ examineData_nested <- function(
     return( DF.output );
     }
 
-examineData_non.nested <- function(
+tabularizeData_non.nested <- function(
     list.input = NULL
     ) {
     DF.output   <- data.frame();
@@ -230,7 +230,7 @@ examineData_non.nested <- function(
     return( DF.output );
     }
 
-examineData_str <- function(
+tabularizeData_str <- function(
     list.input = NULL,
     temp.name  = NULL
     ) {
@@ -238,7 +238,7 @@ examineData_str <- function(
     print(        str(list.input[[  temp.name  ]])    );
     }
 
-examineData_list.names <- function(
+tabularizeData_list.names <- function(
     list.input = NULL
     ) {
     DF.output <- data.frame();
