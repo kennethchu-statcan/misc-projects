@@ -1,11 +1,12 @@
 
 getListOfNodes <- function(
-    list.input                 = NULL,
-    DF.localization            = NULL,
-    DF.item.to.localization    = NULL,
-    DF.guid.to.elementID       = NULL,
-    DF.referentID.to.elementID = NULL,
-    DF.item.to.elementID       = NULL
+    list.input                  = NULL,
+    DF.localization             = NULL,
+    DF.element.to.localization  = NULL,
+#   DF.guid.to.elementID        = NULL,
+    DF.referenceID.to.elementID = NULL,
+    DF.referentID.to.elementID  = NULL,
+    attribute.types             = c('children','rows','columns','initLogic','displayLogic','enterLogic','exitLogic','validationLogic','condition.if','condition.then','condition.else')
     ) {
 
     thisFunctionName <- "getListOfNodes";
@@ -16,17 +17,14 @@ getListOfNodes <- function(
     cat("\nstr(DF.localization)\n");
     print( str(DF.localization)   );
 
-    cat("\nstr(DF.item.to.localization)\n");
-    print( str(DF.item.to.localization)   );
+    cat("\nstr(DF.element.to.localization)\n");
+    print( str(DF.element.to.localization)   );
 
-    cat("\nstr(DF.referenceID.to.referentID)\n");
-    print( str(DF.referenceID.to.referentID)   );
+    cat("\nstr(DF.referenceID.to.elementID)\n");
+    print( str(DF.referenceID.to.elementID)   );
 
     cat("\nstr(DF.referentID.to.elementID)\n");
     print( str(DF.referentID.to.elementID)   );
-
-    cat("\nstr(DF.item.to.elementID)\n");
-    print( str(DF.item.to.elementID)   );
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
     DF.nested <- examineData_nested(
@@ -59,12 +57,13 @@ getListOfNodes <- function(
 
     list.nodes <- list();
     list.attributes <- getListOfNodes_get.attributes(
-        DF.input                   = DF.nested[DF.nested[,'key2'] == current.guid,],
-        DF.localization            = DF.localization,
-        DF.item.to.localization    = DF.item.to.localization,
-        DF.guid.to.elementID       = DF.guid.to.elementID,
-        DF.referentID.to.elementID = DF.referentID.to.elementID,
-        DF.item.to.elementID       = DF.item.to.elementID
+        DF.input                    = DF.nested[DF.nested[,'key2'] == current.guid,],
+        DF.localization             = DF.localization,
+        DF.item.to.localization     = DF.item.to.localization,
+#       DF.guid.to.elementID        = DF.guid.to.elementID,
+        DF.referenceID.to.elementID = DF.referenceID.to.elementID,
+        DF.referentID.to.elementID  = DF.referentID.to.elementID,
+        attribute.types             = attribute.types
         );
     list.nodes[[ current.guid ]] <- node$new(
         guid            = current.guid,
@@ -91,7 +90,7 @@ getListOfNodes <- function(
 
         DF.temp        <- DF.nested[!is.na(DF.nested[,'depth']) & DF.nested[,'depth'] == current.depth,];
         # children.IDs <- unique(DF.temp[DF.temp[,'key3'] == 'children','value']);
-        children.IDs   <- unique(DF.temp[DF.temp[,'key3'] %in% c('children','rows','columns','initLogic','displayLogic','enterLogic','exitLogic','validationLogic','condition.if','condition.then','condition.else'),'value']);
+        children.IDs   <- unique(DF.temp[DF.temp[,'key3'] %in% attribute.types,'value']);
         current.guids  <- setdiff(current.guids,children.IDs);
 
         current.depth <- current.depth + 1;
@@ -99,12 +98,13 @@ getListOfNodes <- function(
 
         for ( guid in children.IDs ) {
             list.attributes <- getListOfNodes_get.attributes(
-                DF.input                   = DF.nested[DF.nested[,'key2'] == guid,],
-                DF.localization            = DF.localization,
-                DF.item.to.localization    = DF.item.to.localization,
-                DF.guid.to.elementID       = DF.guid.to.elementID,
-                DF.referentID.to.elementID = DF.referentID.to.elementID,
-                DF.item.to.elementID       = DF.item.to.elementID
+                DF.input                    = DF.nested[DF.nested[,'key2'] == guid,],
+                DF.localization             = DF.localization,
+                DF.item.to.localization     = DF.item.to.localization,
+#               DF.guid.to.elementID        = DF.guid.to.elementID,
+                DF.referenceID.to.elementID = DF.referenceID.to.elementID,
+                DF.referentID.to.elementID  = DF.referentID.to.elementID,
+                attribute.types             = attribute.types
                 );
             list.nodes[[ guid ]] <- node$new(
                 guid            = guid,
@@ -137,33 +137,19 @@ getListOfNodes <- function(
 
 ##################################################
 getListOfNodes_get.attributes <- function(
-    DF.input                   = NULL,
-    DF.localization            = NULL,
-    DF.item.to.localization    = NULL,
-    DF.guid.to.elementID       = NULL,
-    DF.referentID.to.elementID = NULL,
-    DF.item.to.elementID       = NULL
+    DF.input                    = NULL,
+    DF.localization             = NULL,
+    DF.item.to.localization     = NULL,
+#   DF.guid.to.elementID        = NULL,
+    DF.referentID.to.elementID  = NULL,
+    DF.referenceID.to.elementID = NULL,
+    attribute.types             = NULL
     ) {
 
     list.attributes <- list();
     list.attributes[[ 'type' ]] <- DF.input[1,'key1'];
 
-    attribute.types <- c(
-        'parent',
-        'properties',
-        'children',
-        'rows',
-        'columns',
-        'initLogic',
-        'displayLogic',
-        'enterLogic',
-        'exitLogic',
-        'validationLogic',
-        'condition.if',
-        'condition.then',
-        'condition.else'
-        )
-
+    attribute.types <- setdiff(attribute.types,c('parent','properties')); # 'properties' do NOT correspond to separate nodes 
     for ( attribute.type in attribute.types ) {
 
         list.attributes[[ attribute.type ]] <- NULL;
@@ -183,8 +169,8 @@ getListOfNodes_get.attributes <- function(
                 temp.value  <- DF.temp[DF.temp[,'key4'] == temp.key4,'value'];
                 temp.string <- temp.value;
 
-                if ( temp.value %in% DF.item.to.elementID[,"referenceID"] ) {
-                    DF.one.row  <- DF.item.to.elementID[DF.item.to.elementID[,"referenceID"] == temp.value,];
+                if ( temp.value %in% DF.referenceID.to.elementID[,"referenceID"] ) {
+                    DF.one.row  <- DF.referenceID.to.elementID[DF.referenceID.to.elementID[,"referenceID"] == temp.value,];
                     DF.one.row  <- DF.one.row[,setdiff(colnames(DF.one.row),"referenceID")];
                     temp.string <- paste0(temp.string," (",paste(DF.one.row,collapse=", "),")");
                     }

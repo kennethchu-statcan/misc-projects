@@ -1,23 +1,24 @@
 
-getItemToLocalization <- function(
-    DF.nested                    = NULL,
-    DF.referenceID.to.referentID = NULL,
-    DF.localization              = NULL
+getElementToLocalization <- function(
+    DF.nested                   = NULL,
+    DF.referenceID.to.elementID = NULL,
+    DF.localization             = NULL,
+    element.types               = c('datapointValue','displayTarget','gotoTarget','setTarget')
     ) {
 
-    thisFunctionName <- "getItemToLocalization";
+    thisFunctionName <- "getElementToLocalization";
     cat("\n### ~~~~~~~~~~~~~~~~~~~~ ###");
     cat(paste0("\n",thisFunctionName,"() starts.\n\n"));
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
     DF.output <- DF.nested[DF.nested[,'key1'] != 'Reference',];
-    DF.output <- DF.output[DF.output[,'key4'] %in% c('datapointValue','displayTarget','gotoTarget'),c('key4','value')];
+    DF.output <- DF.output[DF.output[,'key4'] %in% element.types,c('key4','value')];
     colnames(DF.output) <- gsub(x = colnames(DF.output), pattern = "^value$", replacement = "referenceID");
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
     DF.output <- merge(
         x  = DF.output,
-        y  = DF.referenceID.to.referentID,
+        y  = DF.referenceID.to.elementID[,c('referenceID','referentID')],
         by = "referenceID"
         );
     DF.output <- DF.output[,setdiff(colnames(DF.output),"key4")];
@@ -39,7 +40,8 @@ getItemToLocalization <- function(
         by    = 'key2'
         );
     DF.output <- DF.output[,c('referenceID','referentID','key2','value')];
-    colnames(DF.output) <- gsub(x = colnames(DF.output), pattern = "^value$", replacement = "localizationID")
+    colnames(DF.output) <- gsub(x = colnames(DF.output), pattern = "^key2$",  replacement = "guid"          );
+    colnames(DF.output) <- gsub(x = colnames(DF.output), pattern = "^value$", replacement = "localizationID");
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
     DF.output <- merge(
@@ -49,7 +51,7 @@ getItemToLocalization <- function(
         by.x  = 'localizationID',
         by.y  = 'localizationID'
         );
-    DF.output <- DF.output[,c('referenceID','referentID','key2','localizationID','english','french')];
+    DF.output <- DF.output[,c('referenceID','referentID','guid','localizationID','english','french')];
 
     cat("\n# DF.output\n");
     print(   DF.output   );
