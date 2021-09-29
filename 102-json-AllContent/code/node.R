@@ -192,9 +192,11 @@ node <- R6::R6Class(
                 cat(output.string);
             } else if ('specialVarValue' %in% names(private$properties.list)) {
                 output.string <- private$properties.list[['specialVarValue']];
+                output.string <- paste0(" ",output.string);
                 cat(output.string);
             } else if ('stringValue' %in% names(private$properties.list)) {
                 output.string <- private$properties.list[['stringValue']];
+                output.string <- paste0(" ",output.string);
                 cat(output.string);
                 }
             },
