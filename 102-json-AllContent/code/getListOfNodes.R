@@ -3,7 +3,6 @@ getListOfNodes <- function(
     list.input                  = NULL,
     DF.localization             = NULL,
     DF.element.to.localization  = NULL,
-#   DF.guid.to.elementID        = NULL,
     DF.referenceID.to.elementID = NULL,
     DF.referentID.to.elementID  = NULL,
     attribute.types             = c('children','rows','columns','initLogic','displayLogic','enterLogic','exitLogic','validationLogic','condition.if','condition.then','condition.else')
@@ -60,7 +59,6 @@ getListOfNodes <- function(
         DF.input                    = DF.nested[DF.nested[,'key2'] == current.guid,],
         DF.localization             = DF.localization,
         DF.item.to.localization     = DF.item.to.localization,
-#       DF.guid.to.elementID        = DF.guid.to.elementID,
         DF.referenceID.to.elementID = DF.referenceID.to.elementID,
         DF.referentID.to.elementID  = DF.referentID.to.elementID,
         attribute.types             = attribute.types
@@ -89,7 +87,6 @@ getListOfNodes <- function(
     while ( length(current.guids) > 0 & sum(DF.nested[!is.na(DF.nested[,'depth']) & DF.nested[,'depth'] == current.depth,'key3'] == 'children') > 0 ) {
 
         DF.temp        <- DF.nested[!is.na(DF.nested[,'depth']) & DF.nested[,'depth'] == current.depth,];
-        # children.IDs <- unique(DF.temp[DF.temp[,'key3'] == 'children','value']);
         children.IDs   <- unique(DF.temp[DF.temp[,'key3'] %in% attribute.types,'value']);
         current.guids  <- setdiff(current.guids,children.IDs);
 
@@ -101,7 +98,6 @@ getListOfNodes <- function(
                 DF.input                    = DF.nested[DF.nested[,'key2'] == guid,],
                 DF.localization             = DF.localization,
                 DF.item.to.localization     = DF.item.to.localization,
-#               DF.guid.to.elementID        = DF.guid.to.elementID,
                 DF.referenceID.to.elementID = DF.referenceID.to.elementID,
                 DF.referentID.to.elementID  = DF.referentID.to.elementID,
                 attribute.types             = attribute.types
@@ -140,7 +136,6 @@ getListOfNodes_get.attributes <- function(
     DF.input                    = NULL,
     DF.localization             = NULL,
     DF.item.to.localization     = NULL,
-#   DF.guid.to.elementID        = NULL,
     DF.referentID.to.elementID  = NULL,
     DF.referenceID.to.elementID = NULL,
     attribute.types             = NULL
@@ -149,7 +144,7 @@ getListOfNodes_get.attributes <- function(
     list.attributes <- list();
     list.attributes[[ 'type' ]] <- DF.input[1,'key1'];
 
-    attribute.types <- setdiff(attribute.types,c('parent','properties')); # 'properties' do NOT correspond to separate nodes
+    attribute.types <- c(c('parent','properties'),attribute.types);
     for ( attribute.type in attribute.types ) {
 
         list.attributes[[ attribute.type ]] <- NULL;
