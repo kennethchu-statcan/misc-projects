@@ -47,7 +47,7 @@ list.flow.extraction <- list(
     data.snapshot = "2021-09-23.01",
     file.json     = "Flow-Extraction_V1.json",
     file.output   = "EQtree-flow-extraction.txt",
-    dir.output    = "EQtree-flow-extraction.txt"
+    dir.output    = "EQtree-flow-extraction"
     );
 
 ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
