@@ -83,6 +83,8 @@ node <- R6::R6Class(
                 private$print_node_Comparison(indent = indent);
             } else if (grepl(x = self$guid, pattern = "^Connective_"    )) {
                 private$print_node_Connective(indent = indent);
+            } else if (grepl(x = self$guid, pattern = "^Action_"        )) {
+                private$print_node_Action(indent = indent);
             } else {
                 private$print_node_Other(indent = indent);
                 }
@@ -194,6 +196,27 @@ node <- R6::R6Class(
             FUN.format = function(x) { return(x) }
             ) {},
 
+        print_node_Action = function(
+            indent     = '  ',
+            FUN.format = function(x) { return(x) }
+            ) {
+            cat("\n");
+            cat(paste0(rep(indent,self$depth),collapse="") );
+            if ( is.null(self$properties) | length(self$properties) == 0 ) {
+                cat(paste0("(",self$guid,") "));
+            } else { # if ( length(self$properties) > 0 )
+                temp.string <- gsub(x = private$properties.string, pattern = private$format.referentID, replacement = "");
+                temp.string <- gsub(x = temp.string, pattern = "[\\(,]", replacement = "");
+                if ('setTarget' %in% names(private$properties.list)) {
+                    temp.string <- gsub(x = temp.string, pattern = "\\)", replacement = " <- ");
+                } else if ('gotoTarget' %in% names(private$properties.list)) {
+                    temp.string <- gsub(x = temp.string, pattern = "\\)", replacement = "");
+                    }
+                temp.string <- gsub(x = temp.string, pattern = " {2,}", replacement = " ");
+                cat(paste0("(",private$guid.substitute(),") : ",temp.string));
+                }
+            },
+
         print_node_Value = function(
             indent     = '  ',
             FUN.format = function(x) { return(x) }
@@ -205,7 +228,7 @@ node <- R6::R6Class(
                 cat(output.string);
             } else if ('numberValue' %in% names(private$properties.list)) {
                 output.string <- private$properties.list[['numberValue']];
-                output.string <- paste0(" ",output.string," ");
+              # output.string <- paste0(" ",output.string," ");
                 cat(output.string);
             } else if ('specialVarValue' %in% names(private$properties.list)) {
                 output.string <- private$properties.list[['specialVarValue']];
