@@ -18,6 +18,7 @@ setwd( output.directory );
 ##################################################
 # source supporting R code
 code.files <- c(
+    "EQtree.R",
     "getData.R",
     "getElementToLocalization.R",
     "getListOfNodes.R",
@@ -35,63 +36,52 @@ for ( code.file in code.files ) {
 ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
 set.seed(7654321);
 
-# data.snapshot <- "2021-05-20.01";
-# file.json     <- "OIDEXIT_OID_Exit-Prod-V4-0-0_1-0-0_spec.json";
-
-data.snapshot <- "2021-09-23.01";
-file.json     <- "Flow-Extraction_V1.json";
-
-### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
-list.json <- getData(
-    input.file = file.path(data.directory,data.snapshot,file.json)
+list.oidexit <- list(
+    data.snapshot = "2021-05-20.01",
+    file.json     = "OIDEXIT_OID_Exit-Prod-V4-0-0_1-0-0_spec.json",
+    file.output   = "EQtree-oidexit.txt",
+    dir.output    = "EQtree-oidexit"
     );
 
-list.data.frames <- tabularizeData(list.input = list.json);
-
-### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
-list.referenceID.to.elementID <- getReferenceIDToElementID(
-    DF.nested = list.data.frames[['DF.nested']]
-    );
-DF.referenceID.to.elementID <- list.referenceID.to.elementID[['referenceID.to.elementID']];
-DF.referentID.to.elementID  <- list.referenceID.to.elementID[[ 'referentID.to.elementID']];
-
-write.csv(file = "DF-referenceID-to-elementID.csv",   x      = DF.referenceID.to.elementID);
-saveRDS(  file = "DF-referenceID-to-elementID.RData", object = DF.referenceID.to.elementID);
-
-write.csv(file = "DF-referentID-to-elementID.csv",   x      = DF.referentID.to.elementID);
-saveRDS(  file = "DF-referentID-to-elementID.RData", object = DF.referentID.to.elementID);
-
-### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
-DF.element.to.localization <- getElementToLocalization(
-    DF.nested                   = list.data.frames[['DF.nested']],
-    DF.referenceID.to.elementID = DF.referenceID.to.elementID,
-    DF.localization             = list.data.frames[['DF.localization']],
-    element.types               = c('datapointValue','displayTarget','gotoTarget','setTarget')
-    );
-write.csv(file = "DF-element-to-location.csv",   x      = DF.element.to.localization);
-saveRDS(  file = "DF-element-to-location.RData", object = DF.element.to.localization);
-
-### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
-results.getListOfNodes <- getListOfNodes(
-    list.input                  = list.json,
-    DF.localization             = list.data.frames[['DF.localization']],
-    DF.element.to.localization  = DF.element.to.localization,
-    DF.referenceID.to.elementID = DF.referenceID.to.elementID,
-    DF.referentID.to.elementID  = DF.referentID.to.elementID
+list.flow.extraction <- list(
+    data.snapshot = "2021-09-23.01",
+    file.json     = "Flow-Extraction_V1.json",
+    file.output   = "EQtree-flow-extraction.txt",
+    dir.output    = "EQtree-flow-extraction.txt"
     );
 
-DF.nodes   <- results.getListOfNodes[[  'DF.nodes']];
-list.nodes <- results.getListOfNodes[['list.nodes']];
-
-write.csv(file = "DF-nodes.csv",     x      =   DF.nodes);
-saveRDS(  file = "DF-nodes.RData",   object =   DF.nodes);
-saveRDS(  file = "list-nodes.RData", object = list.nodes);
-
 ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
-printListOfNodes(
-    list.nodes = list.nodes,
-    txt.output = 'nodes.txt'
+list.of.lists <- list(
+    list.oidexit,
+    list.flow.extraction
     );
+
+for ( i in seq(1,length(list.of.lists)) ) {
+
+    list.temp     <- list.of.lists[[i]];
+    data.snapshot <- list.temp[['data.snapshot']];
+    file.json     <- list.temp[['file.json'    ]];
+    file.output   <- list.temp[['file.output'  ]];
+    dir.output    <- list.temp[['dir.output'   ]];
+
+    dir.output <- normalizePath(dir.output);
+    if ( !dir.exists(dir.output) ) {
+        dir.create(path = dir.output, recursive = TRUE);
+        }
+
+    directory.original <- normalizePath(getwd());
+    setwd(dir.output);
+    Sys.sleep(5);
+
+    EQtree(
+        file.json   = file.path(data.directory,data.snapshot,file.json),
+        file.output = file.output
+        );
+
+    setwd(directory.original);
+    Sys.sleep(5);
+
+    }
 
 ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
 
