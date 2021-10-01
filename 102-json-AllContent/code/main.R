@@ -35,10 +35,15 @@ for ( code.file in code.files ) {
 ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
 set.seed(7654321);
 
-data.snapshot <- "2021-09-23.01";
+# data.snapshot <- "2021-05-20.01";
+# file.json     <- "OIDEXIT_OID_Exit-Prod-V4-0-0_1-0-0_spec.json";
 
+data.snapshot <- "2021-09-23.01";
+file.json     <- "Flow-Extraction_V1.json";
+
+### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
 list.json <- getData(
-    input.file = file.path(data.directory,data.snapshot,"Flow-Extraction_V1.json")
+    input.file = file.path(data.directory,data.snapshot,file.json)
     );
 
 list.data.frames <- tabularizeData(list.input = list.json);
