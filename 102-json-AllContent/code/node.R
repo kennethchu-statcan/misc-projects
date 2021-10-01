@@ -220,7 +220,6 @@ node <- R6::R6Class(
                     temp.string <- gsub(x = temp.string, pattern = "\\)", replacement = " <- ");
                 } else if ('gotoTarget' %in% names(private$properties.list)) {
                     temp.string <- gsub(x = temp.string, pattern = "\\)", replacement = "");
-                    }
                 } else if ('displayTarget' %in% names(private$properties.list)) {
                     temp.string <- gsub(x = temp.string, pattern = "\\)", replacement = "");
                     }
