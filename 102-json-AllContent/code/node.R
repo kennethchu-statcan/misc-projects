@@ -221,6 +221,9 @@ node <- R6::R6Class(
                 } else if ('gotoTarget' %in% names(private$properties.list)) {
                     temp.string <- gsub(x = temp.string, pattern = "\\)", replacement = "");
                     }
+                } else if ('displayTarget' %in% names(private$properties.list)) {
+                    temp.string <- gsub(x = temp.string, pattern = "\\)", replacement = "");
+                    }
                 temp.string <- gsub(x = temp.string, pattern = " {2,}", replacement = " ");
                 cat(paste0("(",private$guid.substitute(),") : ",temp.string));
                 }
