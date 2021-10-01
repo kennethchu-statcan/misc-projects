@@ -171,8 +171,13 @@ node <- R6::R6Class(
             cat("\n");
             cat(paste0(rep(indent,self$depth),collapse=""));
             cat(paste0("(",self$guid,") "));
-            cat("\n");
-            cat(paste0(rep(indent,1+self$depth),collapse=""));
+            if ( any(grepl(self$get_attribute_IDs(), pattern = "^ConditionGroup_")) ) {
+                cat("\n");
+                cat(paste0(rep(indent,1+self$depth),collapse=""));
+            } else {
+                cat("\n");
+                cat(paste0(rep(indent,1+self$depth),collapse=""), "( NO CONDITION )", sep = "");
+                }
             },
 
         print_node_ConditionGroup = function(
