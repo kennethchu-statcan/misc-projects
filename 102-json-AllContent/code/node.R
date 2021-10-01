@@ -14,6 +14,7 @@ node <- R6::R6Class(
         properties      = NULL,
         parent          = NULL,
         children        = NULL,
+        variables       = NULL,
         rows            = NULL,
         columns         = NULL,
         initLogic       = NULL,
@@ -35,6 +36,7 @@ node <- R6::R6Class(
             properties      = NULL,
             parent          = NULL,
             children        = NULL,
+            variables       = NULL,
             rows            = NULL,
             columns         = NULL,
             initLogic       = NULL,
@@ -52,6 +54,7 @@ node <- R6::R6Class(
                 self$properties      <- properties;
                 self$parent          <- parent;
                 self$children        <- children;
+                self$variables       <- variables;
                 self$rows            <- rows;
                 self$columns         <- columns;
                 self$initLogic       <- initLogic;
@@ -90,9 +93,10 @@ node <- R6::R6Class(
                 }
             },
 
-        get_offspring_IDs = function() {
+        get_attribute_IDs = function() {
             vector.output <- unique(c(
                 as.vector(unlist(self$children       )),
+                as.vector(unlist(self$variables      )),
                 as.vector(unlist(self$rows           )),
                 as.vector(unlist(self$columns        )),
                 as.vector(unlist(self$initLogic      )),

@@ -5,7 +5,7 @@ getListOfNodes <- function(
     DF.element.to.localization  = NULL,
     DF.referenceID.to.elementID = NULL,
     DF.referentID.to.elementID  = NULL,
-    attribute.types             = c('children','rows','columns','initLogic','displayLogic','enterLogic','exitLogic','validationLogic','condition.if','condition.then','condition.else')
+    attribute.types             = c('children','variables','rows','columns','initLogic','displayLogic','enterLogic','exitLogic','validationLogic','condition.if','condition.then','condition.else')
     ) {
 
     thisFunctionName <- "getListOfNodes";
@@ -70,6 +70,7 @@ getListOfNodes <- function(
         properties      = list.attributes[['properties'     ]],
         parent          = list.attributes[['parent'         ]],
         children        = list.attributes[['children'       ]],
+        variables       = list.attributes[['variables'      ]],
         rows            = list.attributes[['rows'           ]],
         columns         = list.attributes[['columns'        ]],
         initLogic       = list.attributes[['initLogic'      ]],
@@ -109,6 +110,7 @@ getListOfNodes <- function(
                 properties      = list.attributes[['properties'     ]],
                 parent          = list.attributes[['parent'         ]],
                 children        = list.attributes[['children'       ]],
+                variables       = list.attributes[['variables'      ]],
                 rows            = list.attributes[['rows'           ]],
                 columns         = list.attributes[['columns'        ]],
                 initLogic       = list.attributes[['initLogic'      ]],
