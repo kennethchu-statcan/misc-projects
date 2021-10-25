@@ -22,6 +22,7 @@ code.files <- c(
     "getData.R",
     "getElementToLocalization.R",
     "getListOfNodes.R",
+    "getPGuidToPNumber.R",
     "getQGuidToQNumber.R",
     "getReferenceIDToElementID.R",
     "node.R",
