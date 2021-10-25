@@ -1,7 +1,8 @@
 
 getReferenceIDToElementID <- function(
     DF.nested           = NULL,
-    DF.QGuid.to.QNumber = NULL
+    DF.QGuid.to.QNumber = NULL,
+    DF.PGuid.to.PNumber = NULL
     ) {
 
     thisFunctionName <- "getReferenceIDToElementID";
@@ -18,28 +19,36 @@ getReferenceIDToElementID <- function(
     DF.referentID.to.elementID <- DF.nested[DF.nested[,'key2'] == 'Referents',];
     DF.referentID.to.elementID <- DF.referentID.to.elementID[DF.referentID.to.elementID[,'key4'] %in% c('id'),c('key3','value')];
     colnames(DF.referentID.to.elementID) <- gsub(x = colnames(DF.referentID.to.elementID), pattern = "^key3$",  replacement = "referentID");
-    colnames(DF.referentID.to.elementID) <- gsub(x = colnames(DF.referentID.to.elementID), pattern = "^value$", replacement = "elementtID" );
+    colnames(DF.referentID.to.elementID) <- gsub(x = colnames(DF.referentID.to.elementID), pattern = "^value$", replacement = "elementID" );
 
-    temp.colnames <- colnames(DF.referentID.to.elementID);
-    DF.referentID.to.elementID <- merge(
-        x     = DF.referentID.to.elementID,
-        y     = DF.QGuid.to.QNumber,
-        all.x = TRUE,
-        by.x  = "elementtID",
-        by.y  = "guid"
+    ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
+    DF.referentID.to.elementID[,'elementID'] <- apply(
+        X      = DF.referentID.to.elementID[,c('referentID','elementID')],
+        MARGIN = 1,
+        FUN    = function(x) {
+            if ( x[2] %in% DF.QGuid.to.QNumber[,'guid'] ) {
+                temp.string <- DF.QGuid.to.QNumber[DF.QGuid.to.QNumber[,'guid'] == x[2],'questionNumber'];
+                temp.string <- paste0("questionNumber ",temp.string);
+                return( temp.string );
+            } else {
+                return( x[2] );
+                }
+            }
         );
-    DF.referentID.to.elementID <- DF.referentID.to.elementID[,c(temp.colnames,'questionNumber')];
 
-    cat("\nDF.referentID.to.elementID\n");
-    print( DF.referentID.to.elementID   );
-
-    is.na.questionNumber <- is.na(DF.referentID.to.elementID[,'questionNumber']);
-    DF.referentID.to.elementID[!is.na.questionNumber,'elementtID'] <- paste0("questionNumber ",DF.referentID.to.elementID[!is.na.questionNumber,'questionNumber']);
-
-    cat("\nDF.referentID.to.elementID\n");
-    print( DF.referentID.to.elementID   );
-
-    DF.referentID.to.elementID <- DF.referentID.to.elementID[,setdiff(colnames(DF.referentID.to.elementID),c("questionNumber"))];
+    DF.referentID.to.elementID[,'elementID'] <- apply(
+        X      = DF.referentID.to.elementID[,c('referentID','elementID')],
+        MARGIN = 1,
+        FUN    = function(x) {
+            if ( x[2] %in% DF.PGuid.to.PNumber[,'guid'] ) {
+                temp.string <- DF.PGuid.to.PNumber[DF.PGuid.to.PNumber[,'guid'] == x[2],'pageNumber'];
+                temp.string <- paste0("pageNumber ",temp.string);
+                return( temp.string );
+            } else {
+                return( x[2] );
+                }
+            }
+        );
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
     DF.referenceID.to.elementID <- merge(
