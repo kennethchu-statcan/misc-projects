@@ -119,8 +119,9 @@ node <- R6::R6Class(
         node.type = NULL,
 
         format.referentID            =      "[a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+",
+        pattern.referentID.elementID = "id = [a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+ \\([a-zA-Z0-9_ \\.]+\\)",
       # pattern.referentID.elementID = "id = [a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+ \\([a-zA-Z0-9_]+\\)",
-        pattern.referentID.elementID = "(; ){,1}id = [a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+ \\([a-zA-Z0-9_ ]+\\)",
+      # pattern.referentID.elementID = "(; ){,1}id = [a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+ \\([a-zA-Z0-9_ ]+\\)",
         pattern.referentID           = "id = [a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+ ",
 
         properties.list   = NULL,
@@ -294,7 +295,8 @@ node <- R6::R6Class(
               # cat(paste0("(",self$guid,") "));
                 cat(paste0("(",private$node.type,") "));
             } else { # if ( length(self$properties) > 0 )
-                temp.string <- gsub(x = private$properties.string, pattern = paste0(private$pattern.referentID.elementID,"[; ]{,2}"), replacement = "");
+              # temp.string <- gsub(x = private$properties.string, pattern = paste0("[; ]{,1}",private$pattern.referentID.elementID), replacement = "");
+                temp.string <- gsub(x = private$properties.string, pattern = paste0(private$pattern.referentID.elementID,"(; )*"), replacement = "");
                 cat(paste0("(",private$guid.substitute(),") : ",temp.string));
                 }
             }
