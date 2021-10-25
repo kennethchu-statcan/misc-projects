@@ -22,6 +22,7 @@ code.files <- c(
     "getData.R",
     "getElementToLocalization.R",
     "getListOfNodes.R",
+    "getQGuidToQNumber.R",
     "getReferenceIDToElementID.R",
     "node.R",
     "printListOfNodes.R",
@@ -64,7 +65,6 @@ for ( i in seq(1,length(list.of.lists)) ) {
     file.output   <- list.temp[['file.output'  ]];
     dir.output    <- list.temp[['dir.output'   ]];
 
-    dir.output <- normalizePath(dir.output);
     if ( !dir.exists(dir.output) ) {
         dir.create(path = dir.output, recursive = TRUE);
         }
