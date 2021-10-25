@@ -127,12 +127,6 @@ node <- R6::R6Class(
         properties.string = NULL,
 
         guid.substitute = function(properties.string = private$properties.string) {
-
-            if ( self$guid == "QuestionScaleRow_cd69c97d562540f8a97359c1e8861c58" ) {
-                cat("\nguid.substitute(): self$guid = ",self$guid,"\n",sep = "");
-                print( properties.string );
-                }
-
             match.result <- gregexpr(pattern = private$pattern.referentID.elementID, text = properties.string);
             if ( as.integer(match.result) < 0 ) {
               # return( self$guid );
@@ -141,13 +135,9 @@ node <- R6::R6Class(
                 output.string <- substr(x = properties.string, start = match.result, stop = -1 + as.integer(match.result) + attr(match.result[[1]],"match.length"));
                 output.string <- gsub(x = output.string, pattern = private$pattern.referentID, replacement = "");
                 output.string <- gsub(x = output.string, pattern = "(\\(|\\))", replacement = "");
-
-                if ( self$guid == "QuestionScaleRow_cd69c97d562540f8a97359c1e8861c58" ) {
-                    cat("\nguid.substitute(): self$guid = ",self$guid,"\n",sep = "");
-                    print( output.string );
-                    }
-
-                if ( output.string != self$guid ) {
+                if ( output.string == self$guid ) {
+                    output.string <- private$node.type;
+                } else {
                   # output.string <- paste0(self$guid,", ",output.string);
                     output.string <- paste0(private$node.type,", ",output.string);
                     }
