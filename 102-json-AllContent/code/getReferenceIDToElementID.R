@@ -1,6 +1,7 @@
 
 getReferenceIDToElementID <- function(
-    DF.nested = NULL
+    DF.nested           = NULL,
+    DF.QGuid.to.QNumber = NULL
     ) {
 
     thisFunctionName <- "getReferenceIDToElementID";
@@ -19,6 +20,27 @@ getReferenceIDToElementID <- function(
     colnames(DF.referentID.to.elementID) <- gsub(x = colnames(DF.referentID.to.elementID), pattern = "^key3$",  replacement = "referentID");
     colnames(DF.referentID.to.elementID) <- gsub(x = colnames(DF.referentID.to.elementID), pattern = "^value$", replacement = "elementtID" );
 
+    temp.colnames <- colnames(DF.referentID.to.elementID);
+    DF.referentID.to.elementID <- merge(
+        x     = DF.referentID.to.elementID,
+        y     = DF.QGuid.to.QNumber,
+        all.x = TRUE,
+        by.x  = "elementtID",
+        by.y  = "guid"
+        );
+    DF.referentID.to.elementID <- DF.referentID.to.elementID[,c(temp.colnames,'questionNumber')];
+
+    cat("\nDF.referentID.to.elementID\n");
+    print( DF.referentID.to.elementID   );
+
+    is.na.questionNumber <- is.na(DF.referentID.to.elementID[,'questionNumber']);
+    DF.referentID.to.elementID[!is.na.questionNumber,'elementtID'] <- paste0("questionNumber ",DF.referentID.to.elementID[!is.na.questionNumber,'questionNumber']);
+
+    cat("\nDF.referentID.to.elementID\n");
+    print( DF.referentID.to.elementID   );
+
+    DF.referentID.to.elementID <- DF.referentID.to.elementID[,setdiff(colnames(DF.referentID.to.elementID),c("questionNumber"))];
+
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
     DF.referenceID.to.elementID <- merge(
         x     = DF.referenceID.to.referentID,
@@ -29,6 +51,27 @@ getReferenceIDToElementID <- function(
 
     cat("\n# str(DF.referenceID.to.elementID)\n");
     print(   str(DF.referenceID.to.elementID)   );
+
+    # temp.colnames <- colnames(DF.referenceID.to.elementID);
+    # DF.referenceID.to.elementID <- merge(
+    #     x     = DF.referenceID.to.elementID,
+    #     y     = DF.QGuid.to.QNumber,
+    #     all.x = TRUE,
+    #     by.x  = "elementtID",
+    #     by.y  = "guid"
+    #     );
+    # DF.referenceID.to.elementID <- DF.referenceID.to.elementID[,c(temp.colnames,'questionNumber')];
+    #
+    # cat("\nDF.referenceID.to.elementID\n");
+    # print( DF.referenceID.to.elementID   );
+    #
+    # is.na.questionNumber <- is.na(DF.referenceID.to.elementID[,'questionNumber']);
+    # DF.referenceID.to.elementID[!is.na.questionNumber,'elementtID'] <- paste0("questionNumber ",DF.referenceID.to.elementID[!is.na.questionNumber,'questionNumber']);
+    #
+    # cat("\nDF.referenceID.to.elementID\n");
+    # print( DF.referenceID.to.elementID   );
+    #
+    # DF.referenceID.to.elementID <- DF.referenceID.to.elementID[,setdiff(colnames(DF.referenceID.to.elementID),c("questionNumber"))];
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
     list.output <- list(
