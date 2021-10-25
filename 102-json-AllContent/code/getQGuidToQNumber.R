@@ -8,20 +8,21 @@ getQGuidToQNumber <- function(
     cat(paste0("\n",thisFunctionName,"() starts.\n\n"));
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
-    DF.QGuid.to.QNumber <- DF.nested;
-    DF.QGuid.to.QNumber <- DF.QGuid.to.QNumber[DF.QGuid.to.QNumber[,'key1'] == 'Question',      ];
-    DF.QGuid.to.QNumber <- DF.QGuid.to.QNumber[DF.QGuid.to.QNumber[,'key3'] == 'properties',    ];
-    DF.QGuid.to.QNumber <- DF.QGuid.to.QNumber[DF.QGuid.to.QNumber[,'key4'] == 'questionNumber',];
-    DF.QGuid.to.QNumber <- DF.QGuid.to.QNumber[,c('key2','value')];
-    colnames(DF.QGuid.to.QNumber) <- c('guid','questionNumber');
+    DF.output <- DF.nested;
+    DF.output <- DF.output[DF.output[,'key1'] == 'Question',      ];
+    DF.output <- DF.output[DF.output[,'key3'] == 'properties',    ];
+    DF.output <- DF.output[DF.output[,'key4'] == 'questionNumber',];
+    DF.output <- DF.output[,c('key2','value')];
+    colnames(DF.output) <- c('guid','questionNumber');
+    DF.output <- unique(DF.output);
 
-    cat("\n# str(DF.QGuid.to.QNumber)\n");
-    print(   str(DF.QGuid.to.QNumber)   );
+    cat("\n# str(DF.output)\n");
+    print(   str(DF.output)   );
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
     cat(paste0("\n",thisFunctionName,"() quits."));
     cat("\n### ~~~~~~~~~~~~~~~~~~~~ ###\n");
-    return( DF.QGuid.to.QNumber );
+    return( DF.output );
 
     }
 
