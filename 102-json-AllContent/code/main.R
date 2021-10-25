@@ -52,10 +52,26 @@ list.flow.extraction <- list(
     dir.output    = "EQtree-flow-extraction"
     );
 
+list.industry.classification <- list(
+    data.snapshot = "2021-10-12.01",
+    file.json     = "BCP_ICS_Industry_Classification_Survey.json",
+    file.output   = "EQtree-industry-classification.txt",
+    dir.output    = "EQtree-industry-classification"
+    );
+
+list.CSBC4.2021 <- list(
+    data.snapshot = "2021-10-12.01",
+    file.json     = "CSBC4-2021.json",
+    file.output   = "EQtree-CSBC4-2021.txt",
+    dir.output    = "EQtree-CSBC4-2021"
+    );
+
 ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
 list.of.lists <- list(
     list.oidexit,
-    list.flow.extraction
+    list.flow.extraction,
+    list.industry.classification,
+    list.CSBC4.2021
     );
 
 for ( i in seq(1,length(list.of.lists)) ) {
