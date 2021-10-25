@@ -13,8 +13,16 @@ EQtree <- function(
     list.data.frames <- tabularizeData(list.input = list.json);
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
-    list.referenceID.to.elementID <- getReferenceIDToElementID(
+    DF.QGuid.to.QNumber <- getQGuidToQNumber(
         DF.nested = list.data.frames[['DF.nested']]
+        );
+    write.csv(file = "DF-QGuid-to-QNumber.csv",   x      = DF.QGuid.to.QNumber);
+    saveRDS(  file = "DF-QGuid-to-QNumber.RData", object = DF.QGuid.to.QNumber);
+
+    ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
+    list.referenceID.to.elementID <- getReferenceIDToElementID(
+        DF.nested           = list.data.frames[['DF.nested']],
+        DF.QGuid.to.QNumber = DF.QGuid.to.QNumber
         );
     DF.referenceID.to.elementID <- list.referenceID.to.elementID[['referenceID.to.elementID']];
     DF.referentID.to.elementID  <- list.referenceID.to.elementID[[ 'referentID.to.elementID']];
