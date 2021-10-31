@@ -10,6 +10,7 @@ assemble.package <- function(
     packages.enhance   = base::c(),
     files.R            = base::c(),
     tests.R            = base::c(),
+    extdata.files      = base::c(),
     scripts.py         = base::c(),
     list.vignettes.Rmd = base::list(),
     list.vignettes.pdf = base::list(),
@@ -107,7 +108,7 @@ assemble.package <- function(
             );
         }
 
-    # ~~~~~~~~~~ #
+     # ~~~~~~~~~~ #
     vignettes.directory <- base::file.path(".","vignettes");
     if ( !dir.exists(vignettes.directory) ) {
         dir.create(
@@ -130,6 +131,20 @@ assemble.package <- function(
             path      = inst.directory,
             recursive = TRUE
             );
+        }
+
+    # ~~~~~~~~~~ #
+    if ( length(extdata.files) > 0 ) {
+        extdata.directory <- base::file.path(".","inst","extdata");
+        if ( !dir.exists(extdata.directory) ) {
+            dir.create(path = extdata.directory, recursive = TRUE);
+            }
+        for ( temp.file in extdata.files ) {
+            file.copy(
+                from = temp.file,
+                to   = extdata.directory
+                );
+            }
         }
 
     # ~~~~~~~~~~ #

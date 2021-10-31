@@ -77,6 +77,14 @@ tests.R <- base::c(
     );
 tests.R <- base::file.path( code.directory , tests.R );
 
+EQDT.JSONs <- base::c(
+    "CSBC4-2021.json",
+    "Industry-Classification-Survey.json",
+    "OID-exit.json",
+    "flow-extraction.json"
+    );
+EQDT.JSONs <- base::file.path( code.directory , EQDT.JSONs );
+
 scripts.py <- base::c();
 scripts.py <- base::file.path( code.directory , scripts.py );
 
@@ -119,6 +127,7 @@ package.path <- assemble.package(
     packages.suggest   = packages.suggest,
     files.R            = files.R,
     tests.R            = tests.R,
+    extdata.files      = EQDT.JSONs,
     scripts.py         = scripts.py
     );
 
@@ -169,6 +178,7 @@ if ( "windows" != base::.Platform[["OS.type"]] ) {
         packages.suggest   = packages.suggest,
         files.R            = files.R,
         tests.R            = tests.R,
+        extdata.files      = EQDT.JSONs,
         scripts.py         = scripts.py,
         list.vignettes.Rmd = list.vignettes.Rmd,
         list.vignettes.pdf = list.vignettes.pdf
