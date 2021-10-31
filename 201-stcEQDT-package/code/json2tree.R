@@ -44,13 +44,13 @@ json2tree <- function(
         DF.nested = list.data.frames[['DF.nested']]
         );
     utils::write.csv(file = "DF-QGuid-to-QNumber.csv",   x      = DF.QGuid.to.QNumber, row.names = FALSE);
-    base::saveRDS(  file = "DF-QGuid-to-QNumber.RData", object = DF.QGuid.to.QNumber);
+    base::saveRDS(   file = "DF-QGuid-to-QNumber.RData", object = DF.QGuid.to.QNumber);
 
     DF.PGuid.to.PNumber <- getPGuidToPNumber(
         DF.nested = list.data.frames[['DF.nested']]
         );
     utils::write.csv(file = "DF-PGuid-to-PNumber.csv",   x      = DF.PGuid.to.PNumber, row.names = FALSE);
-    base::saveRDS(  file = "DF-PGuid-to-PNumber.RData", object = DF.PGuid.to.PNumber);
+    base::saveRDS(   file = "DF-PGuid-to-PNumber.RData", object = DF.PGuid.to.PNumber);
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
     list.referenceID.to.elementID <- getReferenceIDToElementID(
@@ -62,26 +62,15 @@ json2tree <- function(
     DF.referentID.to.elementID  <- list.referenceID.to.elementID[[ 'referentID.to.elementID']];
 
     utils::write.csv(file = "DF-referenceID-to-elementID.csv",   x      = DF.referenceID.to.elementID, row.names = FALSE);
-    base::saveRDS(  file = "DF-referenceID-to-elementID.RData", object = DF.referenceID.to.elementID);
+    base::saveRDS(   file = "DF-referenceID-to-elementID.RData", object = DF.referenceID.to.elementID);
 
     utils::write.csv(file = "DF-referentID-to-elementID.csv",   x      = DF.referentID.to.elementID, row.names = FALSE);
-    base::saveRDS(  file = "DF-referentID-to-elementID.RData", object = DF.referentID.to.elementID);
-
-    ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
-    # DF.element.to.localization <- getElementToLocalization(
-    #     DF.nested                   = list.data.frames[['DF.nested']],
-    #     DF.referenceID.to.elementID = DF.referenceID.to.elementID,
-    #     DF.localization             = list.data.frames[['DF.localization']],
-    #     element.types               = c('datapointValue','displayTarget','gotoTarget','setTarget')
-    #     );
-    # utils::write.csv(file = "DF-element-to-location.csv",   x      = DF.element.to.localization, row.names = FALSE);
-    # base::saveRDS(  file = "DF-element-to-location.RData", object = DF.element.to.localization);
+    base::saveRDS(   file = "DF-referentID-to-elementID.RData", object = DF.referentID.to.elementID);
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
     results.getListOfNodes <- getListOfNodes(
         list.input                  = list.json,
         DF.localization             = list.data.frames[['DF.localization']],
-      # DF.element.to.localization  = DF.element.to.localization,
         DF.referenceID.to.elementID = DF.referenceID.to.elementID,
         DF.referentID.to.elementID  = DF.referentID.to.elementID
         );
@@ -90,8 +79,8 @@ json2tree <- function(
     list.nodes <- results.getListOfNodes[['list.nodes']];
 
     utils::write.csv(file = "DF-nodes.csv",     x      =   DF.nodes);
-    base::saveRDS(  file = "DF-nodes.RData",   object =   DF.nodes);
-    base::saveRDS(  file = "list-nodes.RData", object = list.nodes);
+    base::saveRDS(   file = "DF-nodes.RData",   object =   DF.nodes);
+    base::saveRDS(   file = "list-nodes.RData", object = list.nodes);
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
     printListOfNodes(
