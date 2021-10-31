@@ -54,7 +54,8 @@ packages.suggest <- base::c(
     "rmarkdown",
     "rpart",
     "R.rsp",
-    "testthat"
+    "testthat",
+    "tools"
     );
 
 files.R <- base::c(
@@ -73,17 +74,21 @@ files.R <- base::c(
 files.R <- base::file.path( code.directory , files.R );
 
 tests.R <- base::c(
-    "test-dummy.R"
+    "test-correctness.R"
     );
 tests.R <- base::file.path( code.directory , tests.R );
 
-EQDT.JSONs <- base::c(
+extdata.files <- base::c(
     "CSBC4-2021.json",
     "Industry-Classification-Survey.json",
     "OID-exit.json",
-    "flow-extraction.json"
+    "flow-extraction.json",
+    "expected-CSBC4-2021.txt",
+    "expected-Industry-Classification-Survey.txt",
+    "expected-OID-exit.txt",
+    "expected-flow-extraction.txt"
     );
-EQDT.JSONs <- base::file.path( code.directory , EQDT.JSONs );
+extdata.files <- base::file.path( code.directory , extdata.files );
 
 scripts.py <- base::c();
 scripts.py <- base::file.path( code.directory , scripts.py );
@@ -127,7 +132,7 @@ package.path <- assemble.package(
     packages.suggest   = packages.suggest,
     files.R            = files.R,
     tests.R            = tests.R,
-    extdata.files      = EQDT.JSONs,
+    extdata.files      = extdata.files,
     scripts.py         = scripts.py
     );
 
@@ -178,7 +183,7 @@ if ( "windows" != base::.Platform[["OS.type"]] ) {
         packages.suggest   = packages.suggest,
         files.R            = files.R,
         tests.R            = tests.R,
-        extdata.files      = EQDT.JSONs,
+        extdata.files      = extdata.files,
         scripts.py         = scripts.py,
         list.vignettes.Rmd = list.vignettes.Rmd,
         list.vignettes.pdf = list.vignettes.pdf

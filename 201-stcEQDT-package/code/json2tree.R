@@ -21,21 +21,6 @@
 #'     file.output = 'EQtree-OID-exit.txt'
 #'     )
 #'
-#' json2tree(
-#'     eqdt.json = system.file("extdata", "Industry-Classification-Survey.json", package = "stcEQDT"),
-#'     file.output = 'EQtree-Industry-Classification-Survey.txt'
-#'     )
-#'
-#' json2tree(
-#'     eqdt.json = system.file("extdata", "CSBC4-2021.json", package = "stcEQDT"),
-#'     file.output = 'EQtree-CSBC4-2021.txt'
-#'     )
-#'
-#' json2tree(
-#'     eqdt.json = system.file("extdata", "flow-extraction.json", package = "stcEQDT"),
-#'     file.output = 'EQtree-flow-extraction.txt'
-#'     )
-#'
 #' @param eqdt.json character vector of length 1, containing path to EQDT JSON file
 #' @param file.output character vector of length 1, containing path to output file
 #'
