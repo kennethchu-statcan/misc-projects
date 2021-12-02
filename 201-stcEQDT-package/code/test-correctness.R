@@ -15,16 +15,16 @@ test.correctness_json <- function() {
     print( normalizePath(getwd()) );
 
     file.stems <- base::c(
-        "OID-exit",
         "Industry-Classification-Survey",
         "CSBC4-2021",
-        "flow-extraction"
+        "flow-extraction",
+        "OID-exit"
         );
 
     for ( file.stem in file.stems ) {
 
         expected.txt <- base::paste0('expected-',file.stem,'.txt');
-        expected.txt <- system.file("extdata", expected.txt, package = "stcEQDT");
+        expected.txt <- base::system.file("extdata", expected.txt, package = "stcEQDT");
 
         computed.txt <- base::paste0('computed-',file.stem,'.txt');
         json2tree(

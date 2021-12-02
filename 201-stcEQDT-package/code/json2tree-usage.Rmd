@@ -21,6 +21,7 @@ the questionnaire structure encoded in a given input EQDT JSON file.
 First, load the R package **stcEQDT**.
 ```{r}
 library(stcEQDT)
+library(logger)
 ```
 
 For illustration purposes, a sample EQDT JSON file __OID-exit.json__ has been
@@ -46,8 +47,9 @@ save the result to the output file __EQtree-OID-exit.txt__:
 ```{r}
 output.filename <- 'EQtree-OID-exit.txt'
 stcEQDT::json2tree(
-    eqdt.json    = eqdt.json,
-    file.output = output.filename
+    eqdt.json        = eqdt.json,
+    file.output      = output.filename,
+    output.directory = NULL
     )
 ```
 

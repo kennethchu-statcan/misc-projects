@@ -5,9 +5,9 @@ getReferenceIDToElementID <- function(
     DF.PGuid.to.PNumber = NULL
     ) {
 
-    thisFunctionName <- "getReferenceIDToElementID";
-    base::cat("\n### ~~~~~~~~~~~~~~~~~~~~ ###");
-    base::cat(base::paste0("\n",thisFunctionName,"() starts.\n\n"));
+    # thisFunctionName <- "getReferenceIDToElementID";
+    # base::cat("\n### ~~~~~~~~~~~~~~~~~~~~ ###");
+    # base::cat(base::paste0("\n",thisFunctionName,"() starts.\n\n"));
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
     DF.referenceID.to.referentID <- DF.nested[DF.nested[,'key2'] == 'References',];
@@ -58,8 +58,8 @@ getReferenceIDToElementID <- function(
         by    = "referentID"
         );
 
-    base::cat("\n# utils::str(DF.referenceID.to.elementID)\n");
-    base::print(   utils::str(DF.referenceID.to.elementID)   );
+    # base::cat("\n# utils::str(DF.referenceID.to.elementID)\n");
+    # base::print(   utils::str(DF.referenceID.to.elementID)   );
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
     list.output <- base::list(
@@ -68,8 +68,8 @@ getReferenceIDToElementID <- function(
         );
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
-    base::cat(base::paste0("\n",thisFunctionName,"() quits."));
-    base::cat("\n### ~~~~~~~~~~~~~~~~~~~~ ###\n");
+    # base::cat(base::paste0("\n",thisFunctionName,"() quits."));
+    # base::cat("\n### ~~~~~~~~~~~~~~~~~~~~ ###\n");
     return( list.output );
 
     }

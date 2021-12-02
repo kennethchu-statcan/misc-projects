@@ -2,28 +2,24 @@
 getListOfNodes <- function(
     list.input                  = NULL,
     DF.localization             = NULL,
-  # DF.element.to.localization  = NULL,
     DF.referenceID.to.elementID = NULL,
     DF.referentID.to.elementID  = NULL,
     attribute.types             = c('children','variables','rows','columns','initLogic','displayLogic','enterLogic','exitLogic','validationLogic','condition.if','condition.then','condition.else')
     ) {
 
-    thisFunctionName <- "getListOfNodes";
-    base::cat("\n### ~~~~~~~~~~~~~~~~~~~~ ###");
-    base::cat(base::paste0("\n",thisFunctionName,"() starts.\n\n"));
+    # thisFunctionName <- "getListOfNodes";
+    # base::cat("\n### ~~~~~~~~~~~~~~~~~~~~ ###");
+    # base::cat(base::paste0("\n",thisFunctionName,"() starts.\n\n"));
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
-    base::cat("\nutils::str(DF.localization)\n");
-    base::print( utils::str(DF.localization)   );
+    # base::cat("\nutils::str(DF.localization)\n");
+    # base::print( utils::str(DF.localization)   );
 
-    # base::cat("\nutils::str(DF.element.to.localization)\n");
-    # base::print( utils::str(DF.element.to.localization)   );
+    # base::cat("\nutils::str(DF.referenceID.to.elementID)\n");
+    # base::print( utils::str(DF.referenceID.to.elementID)   );
 
-    base::cat("\nutils::str(DF.referenceID.to.elementID)\n");
-    base::print( utils::str(DF.referenceID.to.elementID)   );
-
-    base::cat("\nutils::str(DF.referentID.to.elementID)\n");
-    base::print( utils::str(DF.referentID.to.elementID)   );
+    # base::cat("\nutils::str(DF.referentID.to.elementID)\n");
+    # base::print( utils::str(DF.referentID.to.elementID)   );
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
     DF.nested <- tabularizeData_nested(
@@ -38,14 +34,14 @@ getListOfNodes <- function(
     DF.nested[DF.nested[,'key3'] == 'else','key3'] <- 'condition.else';
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
-    base::cat("\nutils::str(DF.nested)\n");
-    base::print( utils::str(DF.nested)   );
-
-    base::cat("\nbase::unique(DF.nested[,'key1'])\n");
-    base::print( base::unique(DF.nested[,'key1'])   );
-
-    base::cat("\ntable(DF.nested[,c('key1','key3')])\n");
-    base::print( table(DF.nested[,c('key1','key3')])   );
+    # base::cat("\nutils::str(DF.nested)\n");
+    # base::print( utils::str(DF.nested)   );
+    #
+    # base::cat("\nbase::unique(DF.nested[,'key1'])\n");
+    # base::print( base::unique(DF.nested[,'key1'])   );
+    #
+    # base::cat("\ntable(DF.nested[,c('key1','key3')])\n");
+    # base::print( table(DF.nested[,c('key1','key3')])   );
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
     current.depth <- 0;
@@ -58,7 +54,6 @@ getListOfNodes <- function(
     list.attributes <- getListOfNodes_get.attributes(
         DF.input                    = DF.nested[DF.nested[,'key2'] == current.guid,],
         DF.localization             = DF.localization,
-      # DF.item.to.localization     = DF.item.to.localization,
         DF.referenceID.to.elementID = DF.referenceID.to.elementID,
         DF.referentID.to.elementID  = DF.referentID.to.elementID,
         attribute.types             = attribute.types
@@ -98,7 +93,6 @@ getListOfNodes <- function(
             list.attributes <- getListOfNodes_get.attributes(
                 DF.input                    = DF.nested[DF.nested[,'key2'] == guid,],
                 DF.localization             = DF.localization,
-              # DF.item.to.localization     = DF.item.to.localization,
                 DF.referenceID.to.elementID = DF.referenceID.to.elementID,
                 DF.referentID.to.elementID  = DF.referentID.to.elementID,
                 attribute.types             = attribute.types
@@ -127,8 +121,8 @@ getListOfNodes <- function(
         }
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
-    base::cat(base::paste0("\n",thisFunctionName,"() quits."));
-    base::cat("\n### ~~~~~~~~~~~~~~~~~~~~ ###\n");
+    # base::cat(base::paste0("\n",thisFunctionName,"() quits."));
+    # base::cat("\n### ~~~~~~~~~~~~~~~~~~~~ ###\n");
     return( base::list(DF.nodes = DF.nested , list.nodes = list.nodes) );
 
     }
@@ -137,7 +131,6 @@ getListOfNodes <- function(
 getListOfNodes_get.attributes <- function(
     DF.input                    = NULL,
     DF.localization             = NULL,
-  # DF.item.to.localization     = NULL,
     DF.referentID.to.elementID  = NULL,
     DF.referenceID.to.elementID = NULL,
     attribute.types             = NULL

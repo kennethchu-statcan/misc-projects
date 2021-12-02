@@ -36,7 +36,7 @@ copyright.holder <- "Her Majesty the Queen in Right of Canada, as represented by
 
 description.fields <- base::list(
     Title           = "Statistics Canada EQDT R package",
-    Version         = "0.0.004",
+    Version         = "0.0.005",
     `Authors@R`     = string.authors,
     Description     = "This package provides a collection of auxiliary utilities for working with the Electronic Questinnaire Design Tool (EQDT).",
     Language        = "fr",
@@ -174,6 +174,8 @@ if ( "windows" != base::.Platform[["OS.type"]] ) {
 
     write.to.directory <- "build-vignettes";
 
+    cat("\n### calling assemble.package(), build-vigenettes ... \n");
+
     package.path <- assemble.package(
         write.to.directory = write.to.directory,
         package.name       = package.name,
@@ -189,10 +191,15 @@ if ( "windows" != base::.Platform[["OS.type"]] ) {
         list.vignettes.pdf = list.vignettes.pdf
         );
 
+    cat("\n### completed assemble.package(), build-vigenettes ... \n");
+    cat("\n### calling build.package(), build-vigenettes ... \n");
+
     build.package(
         write.to.directory = write.to.directory,
         package.path       = package.path
         );
+
+    cat("\n### completed build.package(), build-vigenettes ... \n");
 
     }
 

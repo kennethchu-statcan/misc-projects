@@ -7,22 +7,22 @@ tabularizeData <- function(
     csv.localization = "table-localization.csv"
     ) {
 
-    thisFunctionName <- "tabularizeData";
-    base::cat("\n### ~~~~~~~~~~~~~~~~~~~~ ###");
-    base::cat(base::paste0("\n",thisFunctionName,"() starts.\n\n"));
+    # thisFunctionName <- "tabularizeData";
+    # base::cat("\n### ~~~~~~~~~~~~~~~~~~~~ ###");
+    # base::cat(base::paste0("\n",thisFunctionName,"() starts.\n\n"));
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
-    base::cat("\nbase::names(list.input)\n");
-    base::print( base::names(list.input)   );
+    # base::cat("\nbase::names(list.input)\n");
+    # base::print( base::names(list.input)   );
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
     DF.diagnostics <- tabularizeData_list.names(list.input = list.input);
 
-    utils::write.csv(
-        x         = DF.diagnostics,
-        file      = "table-diagnostics.csv",
-        row.names = FALSE
-        );
+    # utils::write.csv(
+    #     x         = DF.diagnostics,
+    #     file      = "table-diagnostics.csv",
+    #     row.names = FALSE
+    #     );
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
     # temp.names <- c('Reference','Localization');
@@ -35,48 +35,48 @@ tabularizeData <- function(
         list.input = list.input
         );
 
-    base::cat("\nutils::str(DF.nested)\n");
-    base::print( utils::str(DF.nested)   );
-
-    base::cat("\nbase::unique(DF.nested[,'key1'])\n");
-    base::print( base::unique(DF.nested[,'key1'])   );
-
-    base::cat("\nbase::table(DF.nested[DF.nested[,'key1'] != 'Reference',c('key1','key3')])\n");
-    base::print( base::table(DF.nested[DF.nested[,'key1'] != 'Reference',c('key1','key3')])   );
-
-    utils::write.csv(
-        x         = DF.nested,
-        file      = csv.nested,
-        row.names = FALSE
-        );
+    # base::cat("\nutils::str(DF.nested)\n");
+    # base::print( utils::str(DF.nested)   );
+    #
+    # base::cat("\nbase::unique(DF.nested[,'key1'])\n");
+    # base::print( base::unique(DF.nested[,'key1'])   );
+    #
+    # base::cat("\nbase::table(DF.nested[DF.nested[,'key1'] != 'Reference',c('key1','key3')])\n");
+    # base::print( base::table(DF.nested[DF.nested[,'key1'] != 'Reference',c('key1','key3')])   );
+    #
+    # utils::write.csv(
+    #     x         = DF.nested,
+    #     file      = csv.nested,
+    #     row.names = FALSE
+    #     );
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
     DF.non.nested <- tabularizeData_non.nested(
         list.input = list.input
         );
 
-    base::cat("\nutils::str(DF.non.nested)\n");
-    base::print( utils::str(DF.non.nested)   );
-
-    utils::write.csv(
-        x         = DF.non.nested,
-        file      = csv.non.nested,
-        row.names = FALSE
-        );
+    # base::cat("\nutils::str(DF.non.nested)\n");
+    # base::print( utils::str(DF.non.nested)   );
+    #
+    # utils::write.csv(
+    #     x         = DF.non.nested,
+    #     file      = csv.non.nested,
+    #     row.names = FALSE
+    #     );
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
     DF.localization <- tabularizeData_localization(
         list.input = list.input
         );
 
-    base::cat("\nutils::str(DF.localization)\n");
-    base::print( utils::str(DF.localization)   );
-
-    utils::write.csv(
-        x         = DF.localization,
-        file      = csv.localization,
-        row.names = FALSE
-        );
+    # base::cat("\nutils::str(DF.localization)\n");
+    # base::print( utils::str(DF.localization)   );
+    #
+    # utils::write.csv(
+    #     x         = DF.localization,
+    #     file      = csv.localization,
+    #     row.names = FALSE
+    #     );
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
     list.output <- base::list(
@@ -87,8 +87,8 @@ tabularizeData <- function(
         );
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
-    base::cat(base::paste0("\n",thisFunctionName,"() quits."));
-    base::cat("\n### ~~~~~~~~~~~~~~~~~~~~ ###\n");
+    # base::cat(base::paste0("\n",thisFunctionName,"() quits."));
+    # base::cat("\n### ~~~~~~~~~~~~~~~~~~~~ ###\n");
     return( list.output );
 
     }
