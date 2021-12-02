@@ -1,0 +1,54 @@
+---
+title: "stcEQDT::json2tree(.) -- usage"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{json2tree-usage}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+    collapse = TRUE,
+    comment = "#>"
+    )
+```
+
+This vignette demonstrates how to use the R function **json2tree(.)**
+implemented in the R package **stcEQDT** in order to visualize
+the questionnaire structure encoded in a given input EQDT JSON file.
+
+First, load the R package **stcEQDT**.
+```{r}
+library(stcEQDT)
+```
+
+For illustration purposes, a sample EQDT JSON file __OID-exit.json__ has been
+bundled with the R package __stcEQDT__.
+We retrieve the system path of this sample EQDT JSON file, and
+save it to the variable __eqdt.json__:
+```{r}
+# eqdt.json <- base::system.file("extdata", "OID-exit.json", package = "stcEQDT")
+eqdt.json <- "/Users/kennethchu/Library/R/4.0/library/stcEQDT/extdata/OID-exit.json";
+```
+
+Next, we display the first 50 lines of the sample EQDT JSON file __OID-exit.json__:
+```{r}
+base::readLines(con = eqdt.json, n = 50)
+```
+
+Now, use the R function __stcEQDT::json2tree(.)__ to render
+the input EQDT JSON file __OID-exit.json__ into tree format and
+save the result to the output file __EQtree-OID-exit.txt__:
+```{r}
+output.filename <- 'EQtree-OID-exit.txt'
+stcEQDT::json2tree(
+    eqdt.json    = eqdt.json,
+    file.output = output.filename
+    )
+```
+
+Lastly, we display the entire output file __EQtree-OID-exit.txt__:
+```{r}
+base::readLines(output.filename)
+```
