@@ -18,7 +18,7 @@ require(rmarkdown);
 
 ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
 vignette.files <- c(
-    "nppCART-usage"
+    "json2tree-usage"
     );
 
 for ( vignette.file in vignette.files ) {

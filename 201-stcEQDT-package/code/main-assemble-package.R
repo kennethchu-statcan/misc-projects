@@ -36,7 +36,7 @@ copyright.holder <- "Her Majesty the Queen in Right of Canada, as represented by
 
 description.fields <- base::list(
     Title           = "Statistics Canada EQDT R package",
-    Version         = "0.0.001",
+    Version         = "0.0.002",
     `Authors@R`     = string.authors,
     Description     = "This package provides a collection of auxiliary utilities for working with the Electronic Questinnaire Design Tool (EQDT).",
     Language        = "fr",
@@ -94,10 +94,10 @@ scripts.py <- base::c();
 scripts.py <- base::file.path( code.directory , scripts.py );
 
 list.vignettes.Rmd <- list(
-    # 'nppCART-usage' = list(
-    #     file  = base::file.path( code.directory , 'nppCART-usage.Rmd'       ),
-    #     asis  = base::file.path( code.directory , 'nppCART-usage.html.asis' )
-    #     )
+    'json2tree-usage' = list(
+        file  = base::file.path( code.directory , 'json2tree-usage.Rmd'       ),
+        asis  = base::file.path( code.directory , 'json2tree-usage.html.asis' )
+        )
     );
 
 list.vignettes.pdf <- list(
