@@ -4,9 +4,9 @@ printListOfNodes <- function(
     txt.output = NULL
     ) {
 
-    thisFunctionName <- "printListOfNodes";
-    cat("\n### ~~~~~~~~~~~~~~~~~~~~ ###");
-    cat(paste0("\n",thisFunctionName,"() starts.\n\n"));
+    # thisFunctionName <- "printListOfNodes";
+    # cat("\n### ~~~~~~~~~~~~~~~~~~~~ ###");
+    # cat(paste0("\n",thisFunctionName,"() starts.\n\n"));
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
     if ( !is.null(txt.output) ) {
@@ -32,8 +32,8 @@ printListOfNodes <- function(
         }
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
-    cat(paste0("\n",thisFunctionName,"() quits."));
-    cat("\n### ~~~~~~~~~~~~~~~~~~~~ ###\n");
+    # cat(paste0("\n",thisFunctionName,"() quits."));
+    # cat("\n### ~~~~~~~~~~~~~~~~~~~~ ###\n");
     return( NULL );
 
     }
