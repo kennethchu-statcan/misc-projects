@@ -28,8 +28,9 @@ test.correctness_json <- function() {
 
         computed.txt <- base::paste0('computed-',file.stem,'.txt');
         json2tree(
-            eqdt.json   = base::system.file("extdata", base::paste0(file.stem,".json"), package = "stcEQDT"),
-            file.output = computed.txt
+            eqdt.json        = base::system.file("extdata", base::paste0(file.stem,".json"), package = "stcEQDT"),
+            file.output      = computed.txt,
+            output.directory = NULL
             );
 
         testthat::test_that(
