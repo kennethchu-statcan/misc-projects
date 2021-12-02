@@ -28,7 +28,10 @@ bundled with the R package __stcEQDT__.
 We retrieve the system path of this sample EQDT JSON file, and
 save it to the variable __eqdt.json__:
 ```{r}
-# eqdt.json <- base::system.file("extdata", "OID-exit.json", package = "stcEQDT")
+eqdt.json <- base::system.file("extdata", "OID-exit.json", package = "stcEQDT")
+```
+
+```{r, echo=FALSE}
 eqdt.json <- "/Users/kennethchu/Library/R/4.0/library/stcEQDT/extdata/OID-exit.json";
 ```
 

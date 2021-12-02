@@ -36,7 +36,7 @@ copyright.holder <- "Her Majesty the Queen in Right of Canada, as represented by
 
 description.fields <- base::list(
     Title           = "Statistics Canada EQDT R package",
-    Version         = "0.0.002",
+    Version         = "0.0.004",
     `Authors@R`     = string.authors,
     Description     = "This package provides a collection of auxiliary utilities for working with the Electronic Questinnaire Design Tool (EQDT).",
     Language        = "fr",
