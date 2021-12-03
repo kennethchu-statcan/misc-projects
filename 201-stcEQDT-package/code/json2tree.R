@@ -37,9 +37,12 @@ json2tree <- function(
 
     ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ###
     original.directory <- base::normalizePath(base::getwd());
-    if ( !base::is.null(output.directory) ) {
+    if ( base::is.null(output.directory) ) {
+        base::cat(base::paste0('\n\n# ',this.function.name,'(): All output and log files are written to: ',base::normalizePath(base::getwd()),'\n\n'));
+    } else {
         if ( !base::dir.exists(output.directory) ) { base::dir.create(path = output.directory, recursive = TRUE); }
         output.directory <- base::normalizePath(output.directory);
+        base::cat(base::paste0('\n\n# ',this.function.name,'(): All output and log files are written to: ',output.directory,'\n\n'));
         base::setwd(output.directory);
         }
 
