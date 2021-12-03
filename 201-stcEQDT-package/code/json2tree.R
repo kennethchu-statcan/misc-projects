@@ -13,7 +13,7 @@
 #' @return NULL
 #'
 #' @examples
-#' # See the vignette 'stcEQDT-usage' for more details, by executing the command: vignette("stcEQDT-usage")
+#' # See the vignette 'json2tree-usage' for more details, by executing the command: vignette("stcEQDT-usage")
 #' library(stcEQDT)
 #'
 #' json2tree(
