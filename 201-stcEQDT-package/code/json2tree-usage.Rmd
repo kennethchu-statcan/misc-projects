@@ -21,7 +21,6 @@ the questionnaire structure encoded in a given input EQDT JSON file.
 First, load the R package **stcEQDT**.
 ```{r}
 library(stcEQDT)
-library(logger)
 ```
 
 For illustration purposes, a sample EQDT JSON file __OID-exit.json__ has been
